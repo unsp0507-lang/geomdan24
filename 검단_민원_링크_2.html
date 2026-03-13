@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>검단신도시 교통 민원 접수 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --bg2: #ffffff;
+    --bg3: #f0f1f5;
+    --border: #e2e4ec;
+    --border2: #c8ccd8;
+    --text: #1a1d2e;
+    --muted: #7c8296;
+    --blue: #2563eb;
+    --blue-light: #eff4ff;
+    --blue-border: #bfcfff;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --green-border: #a7f3d0;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --amber-border: #fcd34d;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .header {
+    padding: 48px 20px 36px;
+    text-align: center;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-chip {
+    display: inline-block;
+    background: var(--blue-light);
+    border: 1px solid var(--blue-border);
+    color: var(--blue);
+    font-size: 12px; font-weight: 700;
+    padding: 5px 16px; border-radius: 20px;
+    margin-bottom: 16px; letter-spacing: 0.5px;
+  }
+  .header h1 {
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 900; color: var(--text);
+    line-height: 1.35; margin-bottom: 10px;
+  }
+  .header p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  .notice {
+    background: var(--amber-light);
+    border: 1px solid var(--amber-border);
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+    max-width: 680px; margin: 20px auto 0;
+  }
+  .notice-icon { font-size: 16px; flex-shrink:0; margin-top:2px; }
+  .notice p { font-size: 13px; color: #92400e; line-height: 1.7; }
+  .notice strong { color: var(--amber); }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
+
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 14px; margin-top: 28px;
+  }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px; margin-bottom: 16px;
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09); }
+
+  .card-header {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .card-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items:center; justify-content:center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+  .card-num.blue { background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-border); }
+  .card-num.green { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
+  .card-num.amber { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border); }
+
+  .card-agency { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .card-agency.blue { color: var(--blue); }
+  .card-agency.green { color: var(--green); }
+  .card-agency.amber { color: var(--amber); }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; }
+
+  .card-body { padding: 16px 20px; }
+  .text-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; }
+
+  .minwon-text {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px;
+    font-size: 13px; color: #3a3f52; line-height: 1.85;
+    white-space: pre-wrap; word-break: keep-all;
+    max-height: 180px; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
+  }
+
+  .personal-box {
+    margin-top: 12px; background: var(--amber-light);
+    border: 1px solid var(--amber-border); border-radius: 10px; padding: 14px;
+  }
+  .personal-label { font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 10px; }
+  .personal-options { display: flex; flex-direction: column; gap: 6px; }
+  .personal-option {
+    font-size: 13px; color: #6b5c2e; padding: 9px 12px;
+    background: #fff; border-radius: 8px; border: 1px solid var(--amber-border);
+    cursor: pointer; transition: all 0.15s; line-height: 1.6;
+  }
+  .personal-option:hover { border-color: var(--amber); background: #fffaed; }
+  .personal-option.selected { border-color: var(--amber); background: #fef3c7; color: #92400e; font-weight: 500; }
+
+  .copy-btn {
+    width: 100%; margin-top: 12px; padding: 14px;
+    border-radius: 10px; border: 1px solid;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    transition: all 0.15s; font-family: inherit; letter-spacing: 0.3px;
+  }
+  .copy-btn.blue { background: var(--blue-light); border-color: var(--blue-border); color: var(--blue); }
+  .copy-btn.blue:hover { background: #dbeafe; }
+  .copy-btn.green { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
+  .copy-btn.green:hover { background: #d1fae5; }
+  .copy-btn.amber { background: var(--amber-light); border-color: var(--amber-border); color: var(--amber); }
+  .copy-btn.amber:hover { background: #fef3c7; }
+  .copy-btn.copied { background: var(--green-light) !important; border-color: var(--green-border) !important; color: var(--green) !important; }
+
+  .submit-btns { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .submit-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--bg3);
+    color: var(--text); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: all 0.15s;
+  }
+  .submit-btn:hover { border-color: var(--border2); background: #eaecf4; }
+  .submit-btn span { font-size: 16px; color: var(--muted); }
+
+  .steps-toggle {
+    width: 100%; text-align: left; padding: 13px 0;
+    background: none; border: none; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 13px; font-family: inherit;
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+    margin-top: 12px;
+  }
+  .steps-toggle:hover { color: var(--text); }
+  .steps-toggle .arrow { transition: transform 0.2s; font-size: 11px; }
+  .steps-toggle.open .arrow { transform: rotate(180deg); }
+  .steps-content { display: none; padding: 14px 0 4px; }
+  .steps-content.open { display: block; }
+
+  .step-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .step-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--bg3); border: 1px solid var(--border2);
+    display: flex; align-items:center; justify-content:center;
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .step-text strong { color: var(--text); font-weight: 600; }
+
+  .footer { text-align: center; font-size: 12px; color: #b0b4c4; padding: 20px 0 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-chip">검단신도시 교통 민원</div>
+  <h1>3분이면 끝나는<br>민원 접수 가이드</h1>
+  <p>아래 민원 내용을 복사해서<br>접수 버튼을 눌러 붙여넣기만 하면 됩니다</p>
+</div>
+
+<div class="notice">
+  <span class="notice-icon">⚠️</span>
+  <p><strong>같은 내용을 그대로 복붙하면 효과가 줄어들 수 있어요.</strong><br>
+  아래에서 본인 상황에 맞는 문장을 하나 선택하면 자동으로 함께 복사됩니다.</p>
+</div>
+
+<div class="wrap">
+  <p class="section-title">민원 3종 — 하나씩 접수해 주세요</p>
+
+  <!-- 민원 1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num blue">1</div>
+      <div>
+        <div class="card-agency blue">인천시 · 국민신문고</div>
+        <div class="card-title">인천1호선 검단구청역 연장</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="text-label">📋 민원 내용</div>
+      <div class="minwon-text" id="text1">검단신도시는 인천 1호선 연장을 핵심 교통축으로 삼고 서울 진출 및 생활권 형성에 기대를 걸어온 지역입니다. 현재 아라역–신검단중앙역–검단호수공원역 구간 공사는 완료됐으나, 검단구청 예정지인 업무14부지 일대에는 이편한세상 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 향후 1만 세대에 가까운 인구가 동시 유입될 대규모 단지들이 입주를 앞두고 있습니다.
+
+해당 지역 주민들은 주택건설 당시 교통분담금을 성실히 납부하였음에도, 1호선 연장(검단구청역)이 이루어지지 않을 경우 교통 편익의 사각지대에 놓이게 됩니다. 검단구청 복합청사 건립과 함께 행정·상업 기능이 집중될 이 지역에 철도 교통 연결 없이는 심각한 교통 불균형이 우려됩니다.
+
+인천 1호선을 검단구청역(업무14부지)까지 연장하여 주민들의 이동권을 보장해 주실 것을 강력히 요청드립니다.</div>
+
+      <div class="personal-box">
+        <div class="personal-label">✏️ 나의 상황 선택 (선택하면 자동으로 함께 복사돼요)</div>
+        <div class="personal-options" id="options1">
+          <div class="personal-option" onclick="selectOption(this,1)">저는 검단신도시 입주예정자로, 교통 인프라 부족으로 인해 실거주 계획에 큰 우려를 갖고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1)">저는 현재 검단신도시에 거주 중이며, 매일 대중교통 불편을 직접 겪고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1)">저는 인근 지역에 거주하는 시민으로, 검단신도시의 교통 인프라 확충이 지역 전체 발전에 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1)">저는 검단신도시에 관심을 가진 시민으로, 균형 있는 교통 개발을 촉구합니다.</div>
+        </div>
+      </div>
+
+      <button class="copy-btn blue" onclick="copyText(this,1)">📋 민원 내용 복사하기</button>
+
+      <div class="submit-btns">
+        <a class="submit-btn" href="https://www.epeople.go.kr" target="_blank">국민신문고 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" href="https://www.incheon.go.kr/civil/index" target="_blank">인천시 민원 접수하러 가기 <span>→</span></a>
+      </div>
+
+      <button class="steps-toggle" onclick="toggleSteps(this)">
+        📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
+      </button>
+      <div class="steps-content">
+        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">2</div><div class="step-text"><strong>"국민신문고 접수하러 가기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">3</div><div class="step-text">우측 상단 <strong>로그인</strong> → 카카오 또는 네이버 간편 로그인</div></div>
+        <div class="step-row"><div class="step-dot">4</div><div class="step-text">상단 메뉴에서 <strong>민원신청</strong> 클릭</div></div>
+        <div class="step-row"><div class="step-dot">5</div><div class="step-text">기관 선택: <strong>인천광역시</strong> 검색 후 선택</div></div>
+        <div class="step-row"><div class="step-dot">6</div><div class="step-text">제목 입력: <strong>인천1호선 검단구청역 연장 요청</strong></div></div>
+        <div class="step-row"><div class="step-dot">7</div><div class="step-text">내용란에 복사한 내용 <strong>붙여넣기</strong> 후 제출</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 민원 2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num amber">2</div>
+      <div>
+        <div class="card-agency amber">국토교통부 · 국민신문고</div>
+        <div class="card-title">인천순환3호선 검단구청역 포함 예타 요청</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="text-label">📋 민원 내용</div>
+      <div class="minwon-text" id="text2">인천순환3호선 예비타당성조사 계획에 검단구청역(업무14부지)을 필수 경유지로 포함해 줄 것을 강력히 요청드립니다.
+
+검단신도시 업무14부지 일대는 검단구청 복합청사 건립이 예정되어 있으며, 이편한세상 에코비스타, 푸르지오 더 파크 등 1만 세대에 달하는 대규모 주거단지가 입주를 앞두고 있습니다. 현재 논의 중인 3호선 노선이 검단구청역을 경유하지 않을 경우, 이 지역 주민들은 1호선과의 복잡한 환승 구조로 인해 통근·통학에 심각한 불편을 겪게 됩니다.
+
+예비타당성조사 시 검단신도시의 실제 인구 유입 속도와 업무14부지의 행정·상업 기능 집중도를 반드시 반영하여, 3호선 노선이 검단구청역을 경유하도록 계획에 포함시켜 주시기를 요청드립니다.</div>
+
+      <div class="personal-box">
+        <div class="personal-label">✏️ 나의 상황 선택 (선택하면 자동으로 함께 복사돼요)</div>
+        <div class="personal-options" id="options2">
+          <div class="personal-option" onclick="selectOption(this,2)">저는 검단신도시 입주예정자로, 교통 인프라 부족으로 인해 실거주 계획에 큰 우려를 갖고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2)">저는 현재 검단신도시에 거주 중이며, 매일 대중교통 불편을 직접 겪고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2)">저는 인근 지역에 거주하는 시민으로, 검단신도시의 교통 인프라 확충이 지역 전체 발전에 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2)">저는 검단신도시에 관심을 가진 시민으로, 균형 있는 교통 개발을 촉구합니다.</div>
+        </div>
+      </div>
+
+      <button class="copy-btn amber" onclick="copyText(this,2)">📋 민원 내용 복사하기</button>
+
+      <div class="submit-btns">
+        <a class="submit-btn" href="https://www.epeople.go.kr" target="_blank">국민신문고 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" href="https://eminwon.molit.go.kr" target="_blank">국토교통부 민원마당 접수하러 가기 <span>→</span></a>
+      </div>
+
+      <button class="steps-toggle" onclick="toggleSteps(this)">
+        📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
+      </button>
+      <div class="steps-content">
+        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">2</div><div class="step-text"><strong>"국민신문고 접수하러 가기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">3</div><div class="step-text">우측 상단 <strong>로그인</strong> → 카카오 또는 네이버 간편 로그인</div></div>
+        <div class="step-row"><div class="step-dot">4</div><div class="step-text">상단 메뉴에서 <strong>민원신청</strong> 클릭</div></div>
+        <div class="step-row"><div class="step-dot">5</div><div class="step-text">기관 선택: <strong>국토교통부</strong> 검색 후 선택</div></div>
+        <div class="step-row"><div class="step-dot">6</div><div class="step-text">제목 입력: <strong>인천순환3호선 검단구청역 경유 예타 포함 요청</strong></div></div>
+        <div class="step-row"><div class="step-dot">7</div><div class="step-text">내용란에 복사한 내용 <strong>붙여넣기</strong> 후 제출</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 민원 3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num green">3</div>
+      <div>
+        <div class="card-agency green">국토교통부 · 인천시 · 서울시</div>
+        <div class="card-title">대장홍대선 검단 연장 및 검단구청역 신설 청원</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="text-label">📋 민원 내용</div>
+      <div class="minwon-text" id="text3">대장홍대선의 검단 연장 및 검단구청역(업무14부지) 신설을 강력히 청원드립니다.
+
+대장홍대선은 수도권 서북부의 핵심 광역 철도망으로, 이를 검단신도시까지 연장할 경우 서울 홍대·합정·공덕 등 주요 업무지구와의 직결 연결이 가능해져 검단 주민들의 서울 접근성을 획기적으로 개선할 수 있습니다.
+
+검단구청 예정지인 업무14부지 일대에는 향후 1만 세대에 가까운 인구가 집중될 예정이며, 행정·상업 기능 또한 함께 집적될 것입니다. 현재 검단신도시는 서울 방면 직결 철도망이 전무한 상황으로 주민들의 통근 부담이 심각합니다.
+
+대장홍대선 연장을 통해 검단구청역을 신설하면 주민들의 서울 접근성 확보는 물론, 수도권 서북부 광역 교통망 완성에도 크게 기여할 것입니다. 관련 계획 수립 시 검단 연장을 반드시 포함시켜 주실 것을 강력히 요청드립니다.</div>
+
+      <div class="personal-box">
+        <div class="personal-label">✏️ 나의 상황 선택 (선택하면 자동으로 함께 복사돼요)</div>
+        <div class="personal-options" id="options3">
+          <div class="personal-option" onclick="selectOption(this,3)">저는 검단신도시 입주예정자로, 서울 출퇴근 문제로 인해 광역 철도 연결이 절실한 상황입니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3)">저는 현재 검단신도시에 거주 중이며, 서울까지의 긴 통근 시간으로 매일 어려움을 겪고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3)">저는 인근 지역에 거주하는 시민으로, 수도권 서북부 광역 교통망 확충이 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3)">저는 검단신도시에 관심을 가진 시민으로, 광역 철도 연결을 통한 균형 발전을 촉구합니다.</div>
+        </div>
+      </div>
+
+      <button class="copy-btn green" onclick="copyText(this,3)">📋 민원 내용 복사하기</button>
+
+      <div class="submit-btns">
+        <a class="submit-btn" href="https://www.epeople.go.kr" target="_blank">국민신문고 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" href="https://eminwon.molit.go.kr" target="_blank">국토교통부 민원마당 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" href="https://www.incheon.go.kr/civil/index" target="_blank">인천시 민원 접수하러 가기 <span>→</span></a>
+      </div>
+
+      <button class="steps-toggle" onclick="toggleSteps(this)">
+        📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
+      </button>
+      <div class="steps-content">
+        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">2</div><div class="step-text"><strong>"국민신문고 접수하러 가기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">3</div><div class="step-text">우측 상단 <strong>로그인</strong> → 카카오 또는 네이버 간편 로그인</div></div>
+        <div class="step-row"><div class="step-dot">4</div><div class="step-text">상단 메뉴에서 <strong>민원신청</strong> 클릭</div></div>
+        <div class="step-row"><div class="step-dot">5</div><div class="step-text">기관 선택: <strong>국토교통부</strong> 검색 후 선택</div></div>
+        <div class="step-row"><div class="step-dot">6</div><div class="step-text">제목 입력: <strong>대장홍대선 검단 연장 및 검단구청역 신설 청원</strong></div></div>
+        <div class="step-row"><div class="step-dot">7</div><div class="step-text">내용란에 복사한 내용 <strong>붙여넣기</strong> 후 제출</div></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer">검단신도시 주민 교통 민원 모음 · 많은 참여가 빠른 반영으로 이어집니다</p>
+</div>
+
+<script>
+  function selectOption(el, num) {
+    document.querySelectorAll('#options' + num + ' .personal-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function toggleSteps(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  }
+  function copyText(btn, num) {
+    const base = document.getElementById('text' + num).innerText;
+    const selected = document.querySelector('#options' + num + ' .selected');
+    const final = selected ? selected.innerText + '\n\n' + base : base;
+    const done = () => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✅ 복사 완료!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2500);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(final).then(done);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = final; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); done();
+    }
+  }
+</script>
+</body>
+</html>
