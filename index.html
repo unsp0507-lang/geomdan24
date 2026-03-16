@@ -7,22 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f6fa;
+    --bg: #f0f4f2;
     --bg2: #ffffff;
-    --bg3: #f0f1f5;
-    --border: #e2e4ec;
-    --border2: #c8ccd8;
-    --text: #1a1d2e;
-    --muted: #7c8296;
-    --blue: #2563eb;
-    --blue-light: #eff4ff;
-    --blue-border: #bfcfff;
-    --green: #059669;
-    --green-light: #ecfdf5;
-    --green-border: #a7f3d0;
-    --amber: #d97706;
-    --amber-light: #fffbeb;
-    --amber-border: #fcd34d;
+    --bg3: #e8f0ed;
+    --border: #c2d4cc;
+    --border2: #9bbdaf;
+    --text: #1a3330;
+    --muted: #5a7a72;
+    --primary: #1a4a45;
+    --primary-light: #e4eeec;
+    --primary-border: #9bbdaf;
+    --primary-mid: #2d6b64;
+    --cream: #e8d5a3;
+    --cream-light: #fdf8ee;
+    --cream-border: #d4b97a;
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body {
@@ -37,35 +35,35 @@
   .header {
     padding: 48px 20px 36px;
     text-align: center;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
+    background: var(--primary);
+    border-bottom: 3px solid var(--primary-mid);
   }
   .header-chip {
     display: inline-block;
-    background: var(--blue-light);
-    border: 1px solid var(--blue-border);
-    color: var(--blue);
+    background: rgba(232,213,163,0.15);
+    border: 1px solid var(--cream);
+    color: var(--cream);
     font-size: 12px; font-weight: 700;
     padding: 5px 16px; border-radius: 20px;
     margin-bottom: 16px; letter-spacing: 0.5px;
   }
   .header h1 {
     font-size: clamp(20px, 5vw, 28px);
-    font-weight: 900; color: var(--text);
+    font-weight: 900; color: #ffffff;
     line-height: 1.35; margin-bottom: 10px;
   }
-  .header p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .header p { font-size: 14px; color: rgba(232,213,163,0.85); line-height: 1.7; }
 
   .notice {
-    background: var(--amber-light);
-    border: 1px solid var(--amber-border);
+    background: var(--cream-light);
+    border: 1px solid var(--cream-border);
     border-radius: 12px; padding: 14px 16px;
     display: flex; gap: 10px; align-items: flex-start;
     max-width: 680px; margin: 20px auto 0;
   }
   .notice-icon { font-size: 16px; flex-shrink:0; margin-top:2px; }
-  .notice p { font-size: 13px; color: #92400e; line-height: 1.7; }
-  .notice strong { color: var(--amber); }
+  .notice p { font-size: 13px; color: #7a5a1a; line-height: 1.7; }
+  .notice strong { color: #a07820; }
 
   .wrap { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
 
@@ -79,29 +77,27 @@
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: 16px; margin-bottom: 16px;
-    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    overflow: hidden; box-shadow: 0 1px 4px rgba(26,74,69,0.08);
     transition: box-shadow 0.2s;
   }
-  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09); }
+  .card:hover { box-shadow: 0 4px 16px rgba(26,74,69,0.14); }
 
   .card-header {
     padding: 20px 20px 16px;
     border-bottom: 1px solid var(--border);
     display: flex; align-items: flex-start; gap: 14px;
+    background: var(--primary-light);
   }
   .card-num {
     width: 32px; height: 32px; border-radius: 50%;
     display: flex; align-items:center; justify-content:center;
     font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    background: var(--primary); color: var(--cream); border: 1px solid var(--primary-mid);
   }
-  .card-num.blue { background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-border); }
-  .card-num.green { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
-  .card-num.amber { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border); }
+  .card-num.blue, .card-num.green, .card-num.amber { background: var(--primary); color: var(--cream); border: 1px solid var(--primary-mid); }
 
   .card-agency { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
-  .card-agency.blue { color: var(--blue); }
-  .card-agency.green { color: var(--green); }
-  .card-agency.amber { color: var(--amber); }
+  .card-agency.blue, .card-agency.green, .card-agency.amber { color: var(--primary-mid); }
   .card-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; }
 
   .card-body { padding: 16px 20px; }
@@ -110,25 +106,25 @@
   .minwon-text {
     background: var(--bg3); border: 1px solid var(--border);
     border-radius: 10px; padding: 14px;
-    font-size: 13px; color: #3a3f52; line-height: 1.85;
+    font-size: 13px; color: var(--text); line-height: 1.85;
     white-space: pre-wrap; word-break: keep-all;
     max-height: 180px; overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
   }
 
   .personal-box {
-    margin-top: 12px; background: var(--amber-light);
-    border: 1px solid var(--amber-border); border-radius: 10px; padding: 14px;
+    margin-top: 12px; background: var(--primary-light);
+    border: 1px solid var(--primary-border); border-radius: 10px; padding: 14px;
   }
-  .personal-label { font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 10px; }
+  .personal-label { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
   .personal-options { display: flex; flex-direction: column; gap: 6px; }
   .personal-option {
-    font-size: 13px; color: #6b5c2e; padding: 9px 12px;
-    background: #fff; border-radius: 8px; border: 1px solid var(--amber-border);
+    font-size: 13px; color: var(--text); padding: 9px 12px;
+    background: #fff; border-radius: 8px; border: 1px solid var(--primary-border);
     cursor: pointer; transition: all 0.15s; line-height: 1.6;
   }
-  .personal-option:hover { border-color: var(--amber); background: #fffaed; }
-  .personal-option.selected { border-color: var(--amber); background: #fef3c7; color: #92400e; font-weight: 500; }
+  .personal-option:hover { border-color: var(--primary); background: var(--primary-light); }
+  .personal-option.selected { border-color: var(--primary); background: var(--primary); color: #ffffff; font-weight: 500; }
 
   .copy-btn {
     width: 100%; margin-top: 12px; padding: 14px;
@@ -136,24 +132,24 @@
     font-size: 14px; font-weight: 700; cursor: pointer;
     transition: all 0.15s; font-family: inherit; letter-spacing: 0.3px;
   }
-  .copy-btn.blue { background: var(--blue-light); border-color: var(--blue-border); color: var(--blue); }
-  .copy-btn.blue:hover { background: #dbeafe; }
-  .copy-btn.green { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
-  .copy-btn.green:hover { background: #d1fae5; }
-  .copy-btn.amber { background: var(--amber-light); border-color: var(--amber-border); color: var(--amber); }
-  .copy-btn.amber:hover { background: #fef3c7; }
-  .copy-btn.copied { background: var(--green-light) !important; border-color: var(--green-border) !important; color: var(--green) !important; }
+  .copy-btn.blue, .copy-btn.green, .copy-btn.amber {
+    background: var(--primary); border-color: var(--primary-mid); color: var(--cream);
+  }
+  .copy-btn.blue:hover, .copy-btn.green:hover, .copy-btn.amber:hover {
+    background: var(--primary-mid);
+  }
+  .copy-btn.copied { background: #2d6b64 !important; border-color: #1a4a45 !important; color: #e8d5a3 !important; }
 
   .submit-btns { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
   .submit-btn {
     display: flex; align-items: center; justify-content: space-between;
     padding: 13px 16px; border-radius: 10px;
-    border: 1px solid var(--border); background: var(--bg3);
-    color: var(--text); text-decoration: none;
-    font-size: 14px; font-weight: 500; transition: all 0.15s;
+    border: 1px solid var(--primary-border); background: var(--primary-light);
+    color: var(--primary); text-decoration: none;
+    font-size: 14px; font-weight: 600; transition: all 0.15s;
   }
-  .submit-btn:hover { border-color: var(--border2); background: #eaecf4; }
-  .submit-btn span { font-size: 16px; color: var(--muted); }
+  .submit-btn:hover { background: var(--primary); color: var(--cream); border-color: var(--primary); }
+  .submit-btn span { font-size: 16px; }
 
   .steps-toggle {
     width: 100%; text-align: left; padding: 13px 0;
@@ -171,28 +167,28 @@
   .step-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
   .step-dot {
     width: 22px; height: 22px; border-radius: 50%;
-    background: var(--bg3); border: 1px solid var(--border2);
+    background: var(--primary-light); border: 1px solid var(--primary-border);
     display: flex; align-items:center; justify-content:center;
-    font-size: 11px; font-weight: 700; color: var(--muted);
+    font-size: 11px; font-weight: 700; color: var(--primary);
     flex-shrink: 0; margin-top: 2px;
   }
   .step-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
   .step-text strong { color: var(--text); font-weight: 600; }
 
-  .footer { text-align: center; font-size: 12px; color: #b0b4c4; padding: 20px 0 40px; }
+  .footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px 0 40px; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-chip">검단신도시 교통 민원</div>
-  <h1>3분이면 끝나는<br>민원 접수 가이드</h1>
-  <p>아래 민원 내용을 복사해서<br>접수 버튼을 눌러 붙여넣기만 하면 됩니다</p>
+  <div class="header-chip">검단신도시 4단계 교통 민원</div>
+  <h1>검단구청역을 중심으로<br>3개 철도가 연결되어야 합니다</h1>
+  <p>인천1호선 · 인천순환3호선 · 대장-홍대선<br>검단구청 복합청사 개발 시 교통 허브가 될 검단구청역,<br>지금 주민 여러분의 민원이 필요합니다</p>
 </div>
 
 <div class="notice">
   <span class="notice-icon">⚠️</span>
-  <p><strong>같은 내용을 그대로 복붙하면 효과가 줄어들 수 있어요.</strong><br>
+  <p><strong>동일한 내용이 반복 제출될 경우 효과가 감소할 수 있습니다.</strong><br>
   아래에서 본인 상황에 맞는 문장을 하나 선택하면 자동으로 함께 복사됩니다.</p>
 </div>
 
@@ -209,22 +205,25 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="text-label">📋 민원 내용</div>
-      <div class="minwon-text" id="text1">검단신도시는 인천 1호선 연장을 핵심 교통축으로 삼고 서울 진출 및 생활권 형성에 기대를 걸어온 지역입니다. 현재 아라역–신검단중앙역–검단호수공원역 구간 공사는 완료됐으나, 검단구청 예정지인 업무14부지 일대에는 이편한세상 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 향후 1만 세대에 가까운 인구가 동시 유입될 대규모 단지들이 입주를 앞두고 있습니다.
+      <div class="text-label">📌 왜 민원을 넣어야 하나요?</div>
+      <div class="minwon-text" style="background:var(--primary-light);border-color:var(--primary-border);color:var(--primary);">인천1호선 검단 연장은 검단신도시 교통 체계의 중요한 기반을 마련한 철도 사업입니다. 현재 아라역(101역), 신검단중앙역(102역), 검단호수공원역(103역)까지 연장이 완료되었지만, 검단구청 신청사 예정지인 업무14부지 일대는 철도 교통 사각지대에 놓여 있습니다.
 
-해당 지역 주민들은 주택건설 당시 교통분담금을 성실히 납부하였음에도, 1호선 연장(검단구청역)이 이루어지지 않을 경우 교통 편익의 사각지대에 놓이게 됩니다. 검단구청 복합청사 건립과 함께 행정·상업 기능이 집중될 이 지역에 철도 교통 연결 없이는 심각한 교통 불균형이 우려됩니다.
+해당 지역에는 이편한세상 검단 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 향후 약 2만 세대에 가까운 인구가 거주할 예정이며, 검단구청 복합청사 건립에 따라 행정·상업 기능이 집중되는 핵심 지역이 될 것으로 예상됩니다.
 
-인천 1호선을 검단구청역(업무14부지)까지 연장하여 주민들의 이동권을 보장해 주실 것을 강력히 요청드립니다.</div>
+따라서 검단구 분구가 예정된 2026년을 고려하여 인천1호선 검단구청역(가칭) 신설 및 연장 검토가 반드시 필요하니 여러분들이 적극 민원을 넣어주십시오.</div>
 
       <div class="personal-box">
-        <div class="personal-label">✏️ 나의 상황 선택 (선택하면 자동으로 함께 복사돼요)</div>
+        <div class="personal-label">✏️ 나의 상황 선택 → 상황에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options1">
-          <div class="personal-option" onclick="selectOption(this,1)">저는 검단신도시 입주예정자로, 교통 인프라 부족으로 인해 실거주 계획에 큰 우려를 갖고 있습니다.</div>
-          <div class="personal-option" onclick="selectOption(this,1)">저는 현재 검단신도시에 거주 중이며, 매일 대중교통 불편을 직접 겪고 있습니다.</div>
-          <div class="personal-option" onclick="selectOption(this,1)">저는 인근 지역에 거주하는 시민으로, 검단신도시의 교통 인프라 확충이 지역 전체 발전에 필요하다고 생각합니다.</div>
-          <div class="personal-option" onclick="selectOption(this,1)">저는 검단신도시에 관심을 가진 시민으로, 균형 있는 교통 개발을 촉구합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1,'minwon1_1')">저는 검단신도시 입주예정자로서 철도 교통 인프라 부족으로 생활 이동에 대한 우려가 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1,'minwon1_2')">저는 현재 검단신도시에 거주하며 서울 및 수도권 이동에 큰 불편을 겪고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1,'minwon1_3')">저는 인근 지역 시민으로서 검단신도시의 철도 교통 인프라 확충이 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,1,'minwon1_4')">저는 검단신도시 발전을 위해 철도망 확충이 필요하다고 생각합니다.</div>
         </div>
       </div>
+
+      <div class="text-label" style="margin-top:12px;">📋 민원 내용 <span style="font-size:11px;color:var(--muted);font-weight:400;">(상황 선택 시 내용이 바뀝니다)</span></div>
+      <div class="minwon-text" id="text1">위에서 나의 상황을 먼저 선택해 주세요.</div>
 
       <button class="copy-btn blue" onclick="copyText(this,1)">📋 민원 내용 복사하기</button>
 
@@ -237,7 +236,7 @@
         📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
       </button>
       <div class="steps-content">
-        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위에서 <strong>나의 상황 선택</strong> 후 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
         <div class="step-row"><div class="step-dot">2</div><div class="step-text"><strong>"국민신문고 접수하러 가기"</strong> 버튼을 누르세요</div></div>
         <div class="step-row"><div class="step-dot">3</div><div class="step-text">우측 상단 <strong>로그인</strong> → 카카오 또는 네이버 간편 로그인</div></div>
         <div class="step-row"><div class="step-dot">4</div><div class="step-text">상단 메뉴에서 <strong>민원신청</strong> 클릭</div></div>
@@ -258,22 +257,25 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="text-label">📋 민원 내용</div>
-      <div class="minwon-text" id="text2">인천순환3호선 예비타당성조사 계획에 검단구청역(업무14부지)을 필수 경유지로 포함해 줄 것을 강력히 요청드립니다.
+      <div class="text-label">📌 왜 민원을 넣어야 하나요?</div>
+      <div class="minwon-text" style="background:var(--primary-light);border-color:var(--primary-border);color:var(--primary);">인천순환3호선은 인천 서북부 지역을 연결하는 중요한 철도망 구축 사업입니다. 현재 인천시는 2026년 상반기 예비타당성조사를 실시할 예정이며, 해당 조사 과정에서 검단구청역(가칭, 업무14부지)이 반드시 포함되어 검토될 필요가 있습니다.
 
-검단신도시 업무14부지 일대는 검단구청 복합청사 건립이 예정되어 있으며, 이편한세상 에코비스타, 푸르지오 더 파크 등 1만 세대에 달하는 대규모 주거단지가 입주를 앞두고 있습니다. 현재 논의 중인 3호선 노선이 검단구청역을 경유하지 않을 경우, 이 지역 주민들은 1호선과의 복잡한 환승 구조로 인해 통근·통학에 심각한 불편을 겪게 됩니다.
+검단구청 신청사 예정지 일대는 검단신도시 북측 생활권의 중심 지역으로 향후 대규모 주거단지와 행정 기능이 집중될 예정입니다. 만약 인천순환3호선 계획에 검단구청역이 포함되지 않을 경우 해당 지역은 철도 교통망에서 배제되는 문제가 발생할 수 있습니다.
 
-예비타당성조사 시 검단신도시의 실제 인구 유입 속도와 업무14부지의 행정·상업 기능 집중도를 반드시 반영하여, 3호선 노선이 검단구청역을 경유하도록 계획에 포함시켜 주시기를 요청드립니다.</div>
+따라서 예비타당성조사 단계에서 검단구청역을 포함하여 노선 검토가 이루어질 것을 강력히 요청할 필요가 있습니다. 적극적으로 민원을 넣어주십시오.</div>
 
       <div class="personal-box">
-        <div class="personal-label">✏️ 나의 상황 선택 (선택하면 자동으로 함께 복사돼요)</div>
+        <div class="personal-label">✏️ 나의 상황 선택 → 상황에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options2">
-          <div class="personal-option" onclick="selectOption(this,2)">저는 검단신도시 입주예정자로, 교통 인프라 부족으로 인해 실거주 계획에 큰 우려를 갖고 있습니다.</div>
-          <div class="personal-option" onclick="selectOption(this,2)">저는 현재 검단신도시에 거주 중이며, 매일 대중교통 불편을 직접 겪고 있습니다.</div>
-          <div class="personal-option" onclick="selectOption(this,2)">저는 인근 지역에 거주하는 시민으로, 검단신도시의 교통 인프라 확충이 지역 전체 발전에 필요하다고 생각합니다.</div>
-          <div class="personal-option" onclick="selectOption(this,2)">저는 검단신도시에 관심을 가진 시민으로, 균형 있는 교통 개발을 촉구합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2,'minwon2_1')">저는 검단신도시 입주예정자로서 철도 교통 인프라 확충이 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2,'minwon2_2')">저는 현재 검단신도시에 거주하며 대중교통 이용에 불편을 겪고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2,'minwon2_3')">저는 인근 지역 시민으로서 검단신도시 교통망 확충이 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,2,'minwon2_4')">저는 검단신도시 발전을 위해 철도망 구축이 필요하다고 생각합니다.</div>
         </div>
       </div>
+
+      <div class="text-label" style="margin-top:12px;">📋 민원 내용 <span style="font-size:11px;color:var(--muted);font-weight:400;">(상황 선택 시 내용이 바뀝니다)</span></div>
+      <div class="minwon-text" id="text2">위에서 나의 상황을 먼저 선택해 주세요.</div>
 
       <button class="copy-btn amber" onclick="copyText(this,2)">📋 민원 내용 복사하기</button>
 
@@ -285,7 +287,7 @@
         📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
       </button>
       <div class="steps-content">
-        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위에서 <strong>나의 상황 선택</strong> 후 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
         <div class="step-row"><div class="step-dot">2</div><div class="step-text"><strong>"국민신문고 접수하러 가기"</strong> 버튼을 누르세요</div></div>
         <div class="step-row"><div class="step-dot">3</div><div class="step-text">우측 상단 <strong>로그인</strong> → 카카오 또는 네이버 간편 로그인</div></div>
         <div class="step-row"><div class="step-dot">4</div><div class="step-text">상단 메뉴에서 <strong>민원신청</strong> 클릭</div></div>
@@ -302,28 +304,31 @@
       <div class="card-num green">3</div>
       <div>
         <div class="card-agency green">국토교통부 · 인천시 · 서울시</div>
-        <div class="card-title">대장홍대선 검단 연장 및 검단구청역 신설 청원</div>
+        <div class="card-title">대장-홍대선 검단 연장 및 검단구청역 신설 청원</div>
       </div>
     </div>
     <div class="card-body">
-      <div class="text-label">📋 민원 내용</div>
-      <div class="minwon-text" id="text3">대장홍대선의 검단 연장 및 검단구청역(업무14부지) 신설을 강력히 청원드립니다.
+      <div class="text-label">📌 왜 민원을 넣어야 하나요?</div>
+      <div class="minwon-text" style="background:var(--primary-light);border-color:var(--primary-border);color:var(--primary);">대장-홍대선은 수도권 서북부와 서울을 연결하는 핵심 광역 철도 노선입니다. 해당 노선이 검단신도시까지 연장될 경우 서울 접근성이 크게 개선되어 검단신도시 주민들의 출퇴근 여건과 생활 편의가 크게 향상될 것으로 기대됩니다.
 
-대장홍대선은 수도권 서북부의 핵심 광역 철도망으로, 이를 검단신도시까지 연장할 경우 서울 홍대·합정·공덕 등 주요 업무지구와의 직결 연결이 가능해져 검단 주민들의 서울 접근성을 획기적으로 개선할 수 있습니다.
+최근 2026년 3월 10일 발표된 자료에 따르면 서울5호선 검단 연장 사업의 예비타당성조사 결과가 통과되었다는 내용이 있습니다. 그러나 대장-홍대선은 서울5호선과 경쟁 관계의 노선이 아니라 수도권 서북부 광역 교통망을 보완하는 또 하나의 중요한 철도 노선입니다.
 
-검단구청 예정지인 업무14부지 일대에는 향후 1만 세대에 가까운 인구가 집중될 예정이며, 행정·상업 기능 또한 함께 집적될 것입니다. 현재 검단신도시는 서울 방면 직결 철도망이 전무한 상황으로 주민들의 통근 부담이 심각합니다.
+특히 향후 대장-홍대선이 계양역으로 연결될 경우, 그 연장선상에서 검단신도시까지의 추가 연장 검토 역시 필요합니다. 검단신도시 주요 개발 축을 고려할 때 노선은 이음역(가칭) → 스마트위드업역(가칭) → 워라밸빌리지역(가칭) → 검단구청역(가칭) 순으로 연결될 경우 지역 활성화와 교통 효율 측면에서 가장 효과적인 노선이 될 것입니다.
 
-대장홍대선 연장을 통해 검단구청역을 신설하면 주민들의 서울 접근성 확보는 물론, 수도권 서북부 광역 교통망 완성에도 크게 기여할 것입니다. 관련 계획 수립 시 검단 연장을 반드시 포함시켜 주실 것을 강력히 요청드립니다.</div>
+따라서 대장-홍대선 검단 연장 및 검단구청역 신설 검토를 요청해야 합니다. 여러분들이 적극적으로 민원을 넣어주십시오.</div>
 
       <div class="personal-box">
-        <div class="personal-label">✏️ 나의 상황 선택 (선택하면 자동으로 함께 복사돼요)</div>
+        <div class="personal-label">✏️ 나의 상황 선택 → 상황에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options3">
-          <div class="personal-option" onclick="selectOption(this,3)">저는 검단신도시 입주예정자로, 서울 출퇴근 문제로 인해 광역 철도 연결이 절실한 상황입니다.</div>
-          <div class="personal-option" onclick="selectOption(this,3)">저는 현재 검단신도시에 거주 중이며, 서울까지의 긴 통근 시간으로 매일 어려움을 겪고 있습니다.</div>
-          <div class="personal-option" onclick="selectOption(this,3)">저는 인근 지역에 거주하는 시민으로, 수도권 서북부 광역 교통망 확충이 필요하다고 생각합니다.</div>
-          <div class="personal-option" onclick="selectOption(this,3)">저는 검단신도시에 관심을 가진 시민으로, 광역 철도 연결을 통한 균형 발전을 촉구합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3,'minwon3_1')">저는 검단신도시 입주예정자로서 서울 출퇴근 교통 개선이 필요합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3,'minwon3_2')">저는 현재 검단신도시에 거주하며 서울 이동에 많은 불편을 겪고 있습니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3,'minwon3_3')">저는 수도권 서북부 광역 교통망 확충이 필요하다고 생각합니다.</div>
+          <div class="personal-option" onclick="selectOption(this,3,'minwon3_4')">저는 검단신도시 발전을 위해 광역 철도 연결이 필요하다고 생각합니다.</div>
         </div>
       </div>
+
+      <div class="text-label" style="margin-top:12px;">📋 민원 내용 <span style="font-size:11px;color:var(--muted);font-weight:400;">(상황 선택 시 내용이 바뀝니다)</span></div>
+      <div class="minwon-text" id="text3">위에서 나의 상황을 먼저 선택해 주세요.</div>
 
       <button class="copy-btn green" onclick="copyText(this,3)">📋 민원 내용 복사하기</button>
 
@@ -336,7 +341,7 @@
         📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
       </button>
       <div class="steps-content">
-        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
+        <div class="step-row"><div class="step-dot">1</div><div class="step-text">위에서 <strong>나의 상황 선택</strong> 후 <strong>"민원 내용 복사하기"</strong> 버튼을 누르세요</div></div>
         <div class="step-row"><div class="step-dot">2</div><div class="step-text"><strong>"국민신문고 접수하러 가기"</strong> 버튼을 누르세요</div></div>
         <div class="step-row"><div class="step-dot">3</div><div class="step-text">우측 상단 <strong>로그인</strong> → 카카오 또는 네이버 간편 로그인</div></div>
         <div class="step-row"><div class="step-dot">4</div><div class="step-text">상단 메뉴에서 <strong>민원신청</strong> 클릭</div></div>
@@ -351,18 +356,97 @@
 </div>
 
 <script>
-  function selectOption(el, num) {
+  const minwonData = {
+    minwon1_1: `저는 검단신도시 입주예정자로서, 교통분담금을 납부하고 입주를 준비 중입니다. 그러나 인천1호선이 검단호수공원역에서 끊겨 업무14부지 일대가 철도 사각지대에 놓인 상황은 실거주 계획에 심각한 우려를 줍니다.
+
+해당 지역에는 이편한세상 검단 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 약 2만 세대가 입주할 예정이며, 검단구청 복합청사까지 건립됩니다. 2026년 검단구 분구를 앞두고 구청 소재지에 철도가 없다는 것은 행정 서비스와 생활 교통 모두에서 심각한 문제입니다.
+
+인천1호선을 검단구청역(업무14부지)까지 연장하여 입주 예정 주민들의 이동권을 보장해 주실 것을 강력히 요청드립니다.`,
+
+    minwon1_2: `저는 현재 검단신도시에 거주하며 매일 대중교통 불편을 직접 겪고 있습니다. 인천1호선이 검단호수공원역에서 끊겨 업무14부지 일대 주민들은 버스와 환승을 반복해야 하는 상황입니다.
+
+해당 지역에는 이편한세상 검단 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 약 2만 세대가 입주할 예정이며, 검단구청 복합청사 건립으로 행정·상업 기능이 집중되는 핵심 지역입니다. 그럼에도 철도 연결이 없다면 이 지역 주민들은 교통 편익의 사각지대에 영구적으로 놓이게 됩니다.
+
+2026년 검단구 분구에 맞춰 인천1호선 검단구청역(업무14부지) 연장을 조속히 검토해 주실 것을 강력히 요청드립니다.`,
+
+    minwon1_3: `저는 인근 지역에 거주하는 시민으로서, 검단신도시의 철도 교통 인프라 확충이 지역 균형 발전을 위해 반드시 필요하다고 생각합니다.
+
+인천1호선은 현재 검단호수공원역까지만 연장된 상태이나, 바로 인근 업무14부지 일대에 약 2만 세대와 검단구청 복합청사가 들어설 예정입니다. 검단구 분구가 예정된 2026년을 앞두고 구청 소재지에 철도 접근성이 없다는 것은 지역 간 교통 불균형을 심화시키는 문제입니다.
+
+인천1호선 검단구청역(업무14부지) 연장 검토를 강력히 요청드립니다.`,
+
+    minwon1_4: `저는 검단신도시에 관심을 가진 시민으로서, 인천1호선 검단구청역 연장의 필요성을 강력히 지지합니다.
+
+현재 인천1호선은 검단호수공원역에서 끊겨 있으나, 업무14부지 일대에는 약 2만 세대와 검단구청 복합청사가 예정되어 있습니다. 2026년 검단구 분구를 앞두고 핵심 지역이 철도망에서 소외된다면 수도권 교통 인프라의 균형 발전에 역행하는 결과가 됩니다.
+
+인천1호선을 검단구청역(업무14부지)까지 연장하여 주민 이동권을 보장해 주실 것을 요청드립니다.`,
+
+    minwon2_1: `저는 검단신도시 입주예정자로서, 인천순환3호선 예비타당성조사 계획에 검단구청역(업무14부지)을 반드시 포함해 주실 것을 강력히 요청드립니다.
+
+2026년 상반기 예타는 노선이 사실상 확정되는 가장 중요한 단계입니다. 이 시점에 검단구청역이 포함되지 않으면 이후 노선 변경은 불가능에 가깝습니다. 업무14부지 일대는 약 2만 세대와 검단구청 복합청사가 들어서는 검단신도시 북측 생활권의 핵심 지역으로, 철도망에서 배제될 경우 입주 예정 주민들의 교통 불편이 장기간 지속될 것입니다.
+
+예타 단계에서 검단구청역을 포함한 노선 검토가 반드시 이루어지도록 요청드립니다.`,
+
+    minwon2_2: `저는 현재 검단신도시에 거주하며 대중교통 불편을 직접 겪고 있습니다. 인천순환3호선 예비타당성조사에 검단구청역(업무14부지)이 반드시 포함되어야 합니다.
+
+2026년 상반기 예타에서 검단구청역이 빠질 경우, 업무14부지 일대는 철도 교통망에서 영구적으로 배제될 가능성이 높습니다. 이 지역은 약 2만 세대와 검단구청 복합청사가 들어서는 검단신도시의 핵심 거점입니다. 지금 목소리를 내지 않으면 우리 지역만 광역 철도망에서 소외되는 결과가 초래됩니다.
+
+예비타당성조사 단계에서 검단구청역을 포함하여 노선 검토가 이루어질 것을 강력히 요청드립니다.`,
+
+    minwon2_3: `저는 인근 지역에 거주하는 시민으로서, 인천순환3호선 예비타당성조사에 검단구청역(업무14부지)이 포함되어야 한다고 생각합니다.
+
+인천 서북부 전체 교통망의 균형 있는 완성을 위해서는 약 2만 세대와 검단구청 복합청사가 예정된 업무14부지가 반드시 3호선 노선에 포함되어야 합니다. 2026년 상반기 예타가 사실상 마지막 기회인 만큼, 지금 단계에서 검단구청역 포함 여부를 결정해야 합니다.
+
+예비타당성조사 단계에서 검단구청역을 포함한 노선 검토를 강력히 요청드립니다.`,
+
+    minwon2_4: `저는 검단신도시에 관심을 가진 시민으로서, 인천순환3호선 예비타당성조사에 검단구청역(업무14부지) 포함을 강력히 요청드립니다.
+
+2026년 상반기 예타는 노선이 확정되는 결정적 단계입니다. 검단신도시 북측 생활권의 핵심인 업무14부지에는 약 2만 세대와 검단구청 복합청사가 예정되어 있으며, 이 지역이 3호선에서 배제된다면 수도권 교통 인프라의 형평성 측면에서도 문제가 됩니다.
+
+예타 단계에서 검단구청역을 포함한 노선 검토가 반드시 이루어지도록 요청드립니다.`,
+
+    minwon3_1: `저는 검단신도시 입주예정자로서, 대장-홍대선의 검단 연장 및 검단구청역(업무14부지) 신설 검토를 강력히 요청드립니다.
+
+2026년 3월 서울5호선 검단 연장 예타가 통과되었지만, 대장-홍대선은 5호선과 경쟁 노선이 아닙니다. 서울 홍대·합정·공덕 방면으로의 직결 연결이 가능한 별개의 광역 노선으로, 수도권 서북부 교통망을 보완하는 중요한 역할을 합니다. 대장-홍대선이 계양역까지 연결될 경우, 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로 이어지는 연장이 가능하며, 이는 지역 개발 축과도 일치하는 가장 효율적인 노선입니다.
+
+입주 예정 주민들의 서울 접근성 확보를 위해 대장-홍대선 검단 연장을 계획 수립 단계에서 반드시 검토해 주시기 바랍니다.`,
+
+    minwon3_2: `저는 현재 검단신도시에 거주하며 서울 이동에 큰 불편을 겪고 있습니다. 대장-홍대선의 검단 연장 및 검단구청역(업무14부지) 신설을 강력히 요청드립니다.
+
+서울5호선 예타 통과는 반가운 소식이지만, 대장-홍대선은 홍대·합정·공덕 방면 직결이 가능한 별도의 광역 노선입니다. 두 노선은 서로를 대체하는 것이 아니라 보완하는 관계입니다. 대장-홍대선이 계양역까지 연결되면 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로의 연장이 현실적인 방안이 됩니다.
+
+수도권 서북부 광역 교통망 완성을 위해 대장-홍대선 검단 연장을 계획에 포함해 주실 것을 강력히 요청드립니다.`,
+
+    minwon3_3: `저는 인근 지역에 거주하는 시민으로서, 수도권 서북부 광역 교통망 완성을 위해 대장-홍대선의 검단 연장 및 검단구청역 신설이 필요하다고 생각합니다.
+
+서울5호선 검단 연장 예타가 통과되었지만, 대장-홍대선은 홍대·합정·공덕 방면으로의 직결이 가능한 별개 노선으로 반드시 함께 추진되어야 합니다. 대장-홍대선이 계양역까지 연결될 경우 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로의 검단 연장이 수도권 서북부 광역망 완성에 크게 기여할 것입니다.
+
+대장-홍대선 검단 연장을 관련 계획 수립 시 반드시 포함해 주실 것을 요청드립니다.`,
+
+    minwon3_4: `저는 검단신도시에 관심을 가진 시민으로서, 대장-홍대선 검단 연장 및 검단구청역 신설 검토를 강력히 요청드립니다.
+
+대장-홍대선은 서울5호선과 경쟁 노선이 아니라 수도권 서북부 광역 교통망을 보완하는 독립적인 노선입니다. 계양역 연결 이후 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로 이어지는 검단 연장은 지역 개발 축과 일치하며 교통 효율 측면에서도 가장 합리적인 방안입니다.
+
+관련 계획 수립 시 대장-홍대선 검단 연장을 반드시 포함시켜 주실 것을 강력히 요청드립니다.`
+  };
+
+  function selectOption(el, num, key) {
     document.querySelectorAll('#options' + num + ' .personal-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
+    document.getElementById('text' + num).innerText = minwonData[key];
   }
+
   function toggleSteps(btn) {
     btn.classList.toggle('open');
     btn.nextElementSibling.classList.toggle('open');
   }
+
   function copyText(btn, num) {
-    const base = document.getElementById('text' + num).innerText;
-    const selected = document.querySelector('#options' + num + ' .selected');
-    const final = selected ? selected.innerText + '\n\n' + base : base;
+    const text = document.getElementById('text' + num).innerText;
+    if (text === '위에서 나의 상황을 먼저 선택해 주세요.') {
+      alert('나의 상황을 먼저 선택해 주세요!');
+      return;
+    }
     const done = () => {
       const orig = btn.innerHTML;
       btn.innerHTML = '✅ 복사 완료!';
@@ -370,10 +454,10 @@
       setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2500);
     };
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(final).then(done);
+      navigator.clipboard.writeText(text).then(done);
     } else {
       const ta = document.createElement('textarea');
-      ta.value = final; document.body.appendChild(ta); ta.select();
+      ta.value = text; document.body.appendChild(ta); ta.select();
       document.execCommand('copy'); document.body.removeChild(ta); done();
     }
   }
