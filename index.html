@@ -233,112 +233,105 @@
 
   .footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px 0 40px; }
 
-  /* 사이드 장식 - 데스크탑만 */
-  @media (min-width: 900px) {
-    body { position: relative; }
+  /* 모바일 사이드 레일 */
+  .wrap {
+    max-width: 680px; margin: 0 auto; padding: 24px 16px 80px;
+    position: relative;
+  }
+  .wrap::before, .wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(45,107,100,0.2) 5%,
+      rgba(45,107,100,0.4) 50%,
+      rgba(45,107,100,0.2) 95%,
+      transparent 100%
+    );
+  }
+  .wrap::before { left: 4px; }
+  .wrap::after  { right: 4px; }
 
-    .side-deco {
-      position: fixed; top: 0; bottom: 0;
-      width: 80px;
-      display: flex; flex-direction: column;
-      align-items: center;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .side-deco.left { left: 20px; }
-    .side-deco.right { right: 20px; }
-
-    /* 세로 레일 라인 */
-    .side-deco .rail {
-      position: absolute; top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom,
-        transparent 0%,
-        rgba(45,107,100,0.3) 10%,
-        rgba(45,107,100,0.5) 50%,
-        rgba(45,107,100,0.3) 90%,
-        transparent 100%
-      );
-    }
-    .side-deco.left .rail { left: 39px; }
-    .side-deco.right .rail { right: 39px; }
-
-    /* 흘러내리는 기차 불빛 */
-    .side-deco .train-light {
-      position: absolute;
-      width: 2px; height: 60px;
-      border-radius: 2px;
-      background: linear-gradient(to bottom, transparent, var(--cream), transparent);
-      opacity: 0.6;
-      animation: trainMove 4s ease-in-out infinite;
-    }
-    .side-deco.left .train-light { left: 39px; }
-    .side-deco.right .train-light { right: 39px; animation-delay: 2s; }
-
-    @keyframes trainMove {
-      0%   { top: -60px; opacity: 0; }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.6; }
-      100% { top: 100vh; opacity: 0; }
-    }
-
-    /* 역 정거장 점들 */
-    .side-deco .station {
-      position: absolute;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--primary);
-      border: 2px solid rgba(45,107,100,0.6);
-      animation: stationPulse 3s ease-in-out infinite;
-    }
-    .side-deco.left .station { left: 35px; }
-    .side-deco.right .station { right: 35px; }
-    .side-deco .station:nth-child(3) { top: 25%; animation-delay: 0s; }
-    .side-deco .station:nth-child(4) { top: 50%; animation-delay: 1s; }
-    .side-deco .station:nth-child(5) { top: 75%; animation-delay: 2s; }
-
-    @keyframes stationPulse {
-      0%, 100% { border-color: rgba(45,107,100,0.4); box-shadow: 0 0 0 0 rgba(232,213,163,0); }
-      50% { border-color: rgba(232,213,163,0.8); box-shadow: 0 0 0 4px rgba(232,213,163,0.15); }
-    }
-
-    /* 노선 텍스트 */
-    .side-deco .line-label {
-      position: absolute;
-      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
-      color: rgba(45,107,100,0.5);
-      writing-mode: vertical-rl;
-      white-space: nowrap;
-    }
-    .side-deco.left .line-label  { top: 15%; left: 10px; }
-    .side-deco.right .line-label { top: 40%; right: 10px; writing-mode: vertical-lr; }
+  /* 흘러내리는 빛 */
+  .rail-light {
+    position: absolute;
+    width: 2px; height: 50px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, transparent, rgba(232,213,163,0.6), transparent);
+    animation: railFlow 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .rail-light.left-light  { left: 4px; animation-delay: 0s; }
+  .rail-light.right-light { right: 4px; animation-delay: 2s; }
+  @keyframes railFlow {
+    0%   { top: -50px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
   }
 
-  @media (max-width: 899px) {
-    .side-deco { display: none; }
+  /* 역 스테이션 */
+  .station-item {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 2;
+  }
+  .station-item.left-st  { left: 0px; flex-direction: row; }
+  .station-item.right-st { right: 0px; flex-direction: row-reverse; }
+
+  /* 도트 */
+  .station-item .s-dot {
+    width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+    background: var(--bg);
+    border: 2px solid rgba(45,107,100,0.5);
+    animation: dotPulse 3s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%,100% { border-color: rgba(45,107,100,0.4); box-shadow: none; }
+    50%      { border-color: rgba(232,213,163,0.9); box-shadow: 0 0 5px rgba(232,213,163,0.5); }
+  }
+
+  /* 역 표지판 */
+  .station-item .s-sign {
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid;
+    white-space: nowrap;
+    animation: neonFlicker 3s ease-in-out infinite;
+  }
+  .station-item.left-st  .s-sign {
+    background: rgba(15,46,42,0.85);
+    border-color: rgba(45,107,100,0.6);
+    color: #7ecfc4;
+    text-shadow: 0 0 6px rgba(126,207,196,0.8);
+    box-shadow: 0 0 6px rgba(45,107,100,0.3), inset 0 0 4px rgba(45,107,100,0.1);
+  }
+  .station-item.right-st .s-sign {
+    background: rgba(15,46,42,0.85);
+    border-color: rgba(232,213,163,0.5);
+    color: #e8d5a3;
+    text-shadow: 0 0 6px rgba(232,213,163,0.9);
+    box-shadow: 0 0 6px rgba(232,213,163,0.25), inset 0 0 4px rgba(232,213,163,0.05);
+  }
+
+  @keyframes neonFlicker {
+    0%,100% { opacity: 1; }
+    92%      { opacity: 1; }
+    93%      { opacity: 0.4; }
+    94%      { opacity: 1; }
+    96%      { opacity: 0.6; }
+    97%      { opacity: 1; }
   }
 </style>
 </head>
 <body>
-
-<!-- 왼쪽 사이드 장식 -->
-<div class="side-deco left">
-  <div class="rail"></div>
-  <div class="train-light"></div>
-  <div class="station"></div>
-  <div class="station"></div>
-  <div class="station"></div>
-  <div class="line-label">인천 1호선</div>
-</div>
-
-<!-- 오른쪽 사이드 장식 -->
-<div class="side-deco right">
-  <div class="rail"></div>
-  <div class="train-light"></div>
-  <div class="station"></div>
-  <div class="station"></div>
-  <div class="station"></div>
-  <div class="line-label">대장-홍대선</div>
-</div>
 
 <div class="header">
   <!-- 푸르지오 더 파크 스타일 마크 -->
@@ -366,6 +359,53 @@
 </div>
 
 <div class="wrap">
+  <!-- 레일 빛 효과 -->
+  <div class="rail-light left-light"></div>
+  <div class="rail-light right-light"></div>
+
+  <!-- 왼쪽 역 (인천1호선) -->
+  <div class="station-item left-st" style="top:6%;animation-delay:0s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">검단호수공원역</div>
+  </div>
+  <div class="station-item left-st" style="top:22%;animation-delay:0.7s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">검단구청역🔜</div>
+  </div>
+  <div class="station-item left-st" style="top:40%;animation-delay:1.4s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">업무14부지역</div>
+  </div>
+  <div class="station-item left-st" style="top:60%;animation-delay:2.1s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">워라밸빌리지역</div>
+  </div>
+  <div class="station-item left-st" style="top:78%;animation-delay:2.8s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">이음역</div>
+  </div>
+
+  <!-- 오른쪽 역 (대장-홍대선) -->
+  <div class="station-item right-st" style="top:12%;animation-delay:0.5s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">계양역</div>
+  </div>
+  <div class="station-item right-st" style="top:30%;animation-delay:1.2s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">스마트위드업역</div>
+  </div>
+  <div class="station-item right-st" style="top:48%;animation-delay:1.9s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">검단구청역🔜</div>
+  </div>
+  <div class="station-item right-st" style="top:66%;animation-delay:2.6s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">홍대입구역</div>
+  </div>
+  <div class="station-item right-st" style="top:84%;animation-delay:3.3s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">대장역</div>
+  </div>
   <p class="section-title">민원 3종 — 하나씩 접수해 주세요</p>
 
   <!-- 민원 1 -->
