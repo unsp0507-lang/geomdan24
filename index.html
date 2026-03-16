@@ -251,8 +251,8 @@
       transparent 100%
     );
   }
-  .wrap::before { left: 4px; }
-  .wrap::after  { right: 4px; }
+  .wrap::before { left: 0px; }
+  .wrap::after  { right: 0px; }
 
   /* 흘러내리는 빛 */
   .rail-light {
@@ -264,8 +264,8 @@
     pointer-events: none;
     z-index: 1;
   }
-  .rail-light.left-light  { left: 4px; animation-delay: 0s; }
-  .rail-light.right-light { right: 4px; animation-delay: 2s; }
+  .rail-light.left-light  { left: 0px; animation-delay: 0s; }
+  .rail-light.right-light { right: 0px; animation-delay: 2s; }
   @keyframes railFlow {
     0%   { top: -50px; opacity: 0; }
     10%  { opacity: 1; }
@@ -273,20 +273,21 @@
     100% { top: 100%; opacity: 0; }
   }
 
-  /* 역 스테이션 */
+  /* 역 스테이션 - 라인 바깥으로 완전히 */
   .station-item {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     z-index: 2;
+    pointer-events: none;
   }
-  .station-item.left-st  { left: 0px; flex-direction: row; }
-  .station-item.right-st { right: 0px; flex-direction: row-reverse; }
+  .station-item.left-st  { left: -2px; flex-direction: row; transform: translateX(-100%); }
+  .station-item.right-st { right: -2px; flex-direction: row-reverse; transform: translateX(100%); }
 
   /* 도트 */
   .station-item .s-dot {
-    width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
     background: var(--bg);
     border: 2px solid rgba(45,107,100,0.5);
     animation: dotPulse 3s ease-in-out infinite;
@@ -300,25 +301,30 @@
   .station-item .s-sign {
     font-size: 8px; font-weight: 700;
     letter-spacing: 0.3px;
-    padding: 3px 6px;
+    padding: 3px 5px;
     border-radius: 4px;
     border: 1px solid;
     white-space: nowrap;
     animation: neonFlicker 3s ease-in-out infinite;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    height: auto;
   }
+  .station-item.right-st .s-sign { writing-mode: vertical-lr; }
+
   .station-item.left-st  .s-sign {
-    background: rgba(15,46,42,0.85);
+    background: rgba(15,46,42,0.9);
     border-color: rgba(45,107,100,0.6);
     color: #7ecfc4;
     text-shadow: 0 0 6px rgba(126,207,196,0.8);
-    box-shadow: 0 0 6px rgba(45,107,100,0.3), inset 0 0 4px rgba(45,107,100,0.1);
+    box-shadow: 0 0 6px rgba(45,107,100,0.3);
   }
   .station-item.right-st .s-sign {
-    background: rgba(15,46,42,0.85);
+    background: rgba(15,46,42,0.9);
     border-color: rgba(232,213,163,0.5);
     color: #e8d5a3;
     text-shadow: 0 0 6px rgba(232,213,163,0.9);
-    box-shadow: 0 0 6px rgba(232,213,163,0.25), inset 0 0 4px rgba(232,213,163,0.05);
+    box-shadow: 0 0 6px rgba(232,213,163,0.25);
   }
 
   @keyframes neonFlicker {
@@ -364,47 +370,39 @@
   <div class="rail-light right-light"></div>
 
   <!-- 왼쪽 역 (인천1호선) -->
-  <div class="station-item left-st" style="top:6%;animation-delay:0s;">
+  <div class="station-item left-st" style="top:8%;animation-delay:0s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">아라역</div>
+  </div>
+  <div class="station-item left-st" style="top:28%;animation-delay:0.7s;">
+    <div class="s-dot"></div>
+    <div class="s-sign">신검단중앙역</div>
+  </div>
+  <div class="station-item left-st" style="top:50%;animation-delay:1.4s;">
     <div class="s-dot"></div>
     <div class="s-sign">검단호수공원역</div>
   </div>
-  <div class="station-item left-st" style="top:22%;animation-delay:0.7s;">
-    <div class="s-dot"></div>
-    <div class="s-sign">검단구청역🔜</div>
-  </div>
-  <div class="station-item left-st" style="top:40%;animation-delay:1.4s;">
-    <div class="s-dot"></div>
-    <div class="s-sign">업무14부지역</div>
-  </div>
-  <div class="station-item left-st" style="top:60%;animation-delay:2.1s;">
-    <div class="s-dot"></div>
-    <div class="s-sign">워라밸빌리지역</div>
-  </div>
-  <div class="station-item left-st" style="top:78%;animation-delay:2.8s;">
-    <div class="s-dot"></div>
-    <div class="s-sign">이음역</div>
+  <div class="station-item left-st" style="top:72%;animation-delay:2.1s;">
+    <div class="s-dot" style="border-color:rgba(232,213,163,0.9);box-shadow:0 0 6px rgba(232,213,163,0.6);"></div>
+    <div class="s-sign" style="border-color:rgba(232,213,163,0.8);color:#e8d5a3;text-shadow:0 0 8px rgba(232,213,163,1);animation-delay:2.1s;">검단구청역(가칭)🔜</div>
   </div>
 
-  <!-- 오른쪽 역 (대장-홍대선) -->
-  <div class="station-item right-st" style="top:12%;animation-delay:0.5s;">
+  <!-- 오른쪽 역 (대장-홍대선 연장안) -->
+  <div class="station-item right-st" style="top:15%;animation-delay:0.5s;">
     <div class="s-dot"></div>
-    <div class="s-sign">계양역</div>
+    <div class="s-sign">이음역(가칭)</div>
   </div>
-  <div class="station-item right-st" style="top:30%;animation-delay:1.2s;">
+  <div class="station-item right-st" style="top:36%;animation-delay:1.2s;">
     <div class="s-dot"></div>
-    <div class="s-sign">스마트위드업역</div>
+    <div class="s-sign">스마트위드업역(가칭)</div>
   </div>
-  <div class="station-item right-st" style="top:48%;animation-delay:1.9s;">
+  <div class="station-item right-st" style="top:57%;animation-delay:1.9s;">
     <div class="s-dot"></div>
-    <div class="s-sign">검단구청역🔜</div>
+    <div class="s-sign">워라밸빌리지역(가칭)</div>
   </div>
-  <div class="station-item right-st" style="top:66%;animation-delay:2.6s;">
-    <div class="s-dot"></div>
-    <div class="s-sign">홍대입구역</div>
-  </div>
-  <div class="station-item right-st" style="top:84%;animation-delay:3.3s;">
-    <div class="s-dot"></div>
-    <div class="s-sign">대장역</div>
+  <div class="station-item right-st" style="top:78%;animation-delay:2.6s;">
+    <div class="s-dot" style="border-color:rgba(232,213,163,0.9);box-shadow:0 0 6px rgba(232,213,163,0.6);"></div>
+    <div class="s-sign" style="border-color:rgba(232,213,163,0.8);color:#e8d5a3;text-shadow:0 0 8px rgba(232,213,163,1);animation-delay:2.6s;">검단구청역(가칭)🔜</div>
   </div>
   <p class="section-title">민원 3종 — 하나씩 접수해 주세요</p>
 
