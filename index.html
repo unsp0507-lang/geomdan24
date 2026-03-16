@@ -35,8 +35,35 @@
   .header {
     padding: 48px 20px 36px;
     text-align: center;
-    background: var(--primary);
+    background: linear-gradient(135deg, #0f2e2a 0%, #1a4a45 40%, #1f5a53 60%, #0f2e2a 100%);
+    background-size: 200% 200%;
+    animation: headerShimmer 6s ease infinite;
     border-bottom: 3px solid var(--primary-mid);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(232,213,163,0.08), transparent);
+    animation: sweep 3.5s ease-in-out infinite;
+  }
+  .header::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(232,213,163,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  @keyframes headerShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes sweep {
+    0% { left: -100%; }
+    60% { left: 150%; }
+    100% { left: 150%; }
   }
   .header-chip {
     display: inline-block;
@@ -46,13 +73,25 @@
     font-size: 12px; font-weight: 700;
     padding: 5px 16px; border-radius: 20px;
     margin-bottom: 16px; letter-spacing: 0.5px;
+    animation: chipGlow 2.5s ease-in-out infinite;
+  }
+  @keyframes chipGlow {
+    0%, 100% { box-shadow: 0 0 0px rgba(232,213,163,0); }
+    50% { box-shadow: 0 0 12px rgba(232,213,163,0.35); }
   }
   .header h1 {
     font-size: clamp(20px, 5vw, 28px);
     font-weight: 900; color: #ffffff;
     line-height: 1.35; margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(232,213,163,0.2);
   }
   .header p { font-size: 14px; color: rgba(232,213,163,0.85); line-height: 1.7; }
+  /* P 마크 반짝 */
+  @keyframes pMarkSpin {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(232,213,163,0.3)); }
+    50% { filter: drop-shadow(0 0 12px rgba(232,213,163,0.7)); }
+  }
+  .prugio-mark { animation: pMarkSpin 2.5s ease-in-out infinite; }
 
   .notice {
     background: var(--cream-light);
@@ -94,7 +133,11 @@
     font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
     background: var(--primary); color: var(--cream); border: 1px solid var(--primary-mid);
   }
-  .card-num.blue, .card-num.green, .card-num.amber { background: var(--primary); color: var(--cream); border: 1px solid var(--primary-mid); }
+  .card-num.blue, .card-num.green, .card-num.amber { background: var(--primary); color: var(--cream); border: 1px solid var(--primary-mid); animation: numGlow 3s ease-in-out infinite; }
+  @keyframes numGlow {
+    0%, 100% { box-shadow: 0 0 0px rgba(232,213,163,0); }
+    50% { box-shadow: 0 0 10px rgba(232,213,163,0.4), inset 0 0 6px rgba(232,213,163,0.1); }
+  }
 
   .card-agency { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
   .card-agency.blue, .card-agency.green, .card-agency.amber { color: var(--primary-mid); }
@@ -134,6 +177,19 @@
   }
   .copy-btn.blue, .copy-btn.green, .copy-btn.amber {
     background: var(--primary); border-color: var(--primary-mid); color: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  .copy-btn.blue::after, .copy-btn.green::after, .copy-btn.amber::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(232,213,163,0.2), transparent);
+    animation: btnShimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes btnShimmer {
+    0% { left: -100%; }
+    50% { left: 150%; }
+    100% { left: 150%; }
   }
   .copy-btn.blue:hover, .copy-btn.green:hover, .copy-btn.amber:hover {
     background: var(--primary-mid);
@@ -176,14 +232,118 @@
   .step-text strong { color: var(--text); font-weight: 600; }
 
   .footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px 0 40px; }
+
+  /* 사이드 장식 - 데스크탑만 */
+  @media (min-width: 900px) {
+    body { position: relative; }
+
+    .side-deco {
+      position: fixed; top: 0; bottom: 0;
+      width: 80px;
+      display: flex; flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .side-deco.left { left: 20px; }
+    .side-deco.right { right: 20px; }
+
+    /* 세로 레일 라인 */
+    .side-deco .rail {
+      position: absolute; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(45,107,100,0.3) 10%,
+        rgba(45,107,100,0.5) 50%,
+        rgba(45,107,100,0.3) 90%,
+        transparent 100%
+      );
+    }
+    .side-deco.left .rail { left: 39px; }
+    .side-deco.right .rail { right: 39px; }
+
+    /* 흘러내리는 기차 불빛 */
+    .side-deco .train-light {
+      position: absolute;
+      width: 2px; height: 60px;
+      border-radius: 2px;
+      background: linear-gradient(to bottom, transparent, var(--cream), transparent);
+      opacity: 0.6;
+      animation: trainMove 4s ease-in-out infinite;
+    }
+    .side-deco.left .train-light { left: 39px; }
+    .side-deco.right .train-light { right: 39px; animation-delay: 2s; }
+
+    @keyframes trainMove {
+      0%   { top: -60px; opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.6; }
+      100% { top: 100vh; opacity: 0; }
+    }
+
+    /* 역 정거장 점들 */
+    .side-deco .station {
+      position: absolute;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid rgba(45,107,100,0.6);
+      animation: stationPulse 3s ease-in-out infinite;
+    }
+    .side-deco.left .station { left: 35px; }
+    .side-deco.right .station { right: 35px; }
+    .side-deco .station:nth-child(3) { top: 25%; animation-delay: 0s; }
+    .side-deco .station:nth-child(4) { top: 50%; animation-delay: 1s; }
+    .side-deco .station:nth-child(5) { top: 75%; animation-delay: 2s; }
+
+    @keyframes stationPulse {
+      0%, 100% { border-color: rgba(45,107,100,0.4); box-shadow: 0 0 0 0 rgba(232,213,163,0); }
+      50% { border-color: rgba(232,213,163,0.8); box-shadow: 0 0 0 4px rgba(232,213,163,0.15); }
+    }
+
+    /* 노선 텍스트 */
+    .side-deco .line-label {
+      position: absolute;
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      color: rgba(45,107,100,0.5);
+      writing-mode: vertical-rl;
+      white-space: nowrap;
+    }
+    .side-deco.left .line-label  { top: 15%; left: 10px; }
+    .side-deco.right .line-label { top: 40%; right: 10px; writing-mode: vertical-lr; }
+  }
+
+  @media (max-width: 899px) {
+    .side-deco { display: none; }
+  }
 </style>
 </head>
 <body>
 
+<!-- 왼쪽 사이드 장식 -->
+<div class="side-deco left">
+  <div class="rail"></div>
+  <div class="train-light"></div>
+  <div class="station"></div>
+  <div class="station"></div>
+  <div class="station"></div>
+  <div class="line-label">인천 1호선</div>
+</div>
+
+<!-- 오른쪽 사이드 장식 -->
+<div class="side-deco right">
+  <div class="rail"></div>
+  <div class="train-light"></div>
+  <div class="station"></div>
+  <div class="station"></div>
+  <div class="station"></div>
+  <div class="line-label">대장-홍대선</div>
+</div>
+
 <div class="header">
   <!-- 푸르지오 더 파크 스타일 마크 -->
   <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;">
-    <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+    <svg class="prugio-mark" width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
       <circle cx="26" cy="26" r="25" fill="none" stroke="rgba(232,213,163,0.4)" stroke-width="1"/>
       <circle cx="26" cy="26" r="20" fill="none" stroke="rgba(232,213,163,0.25)" stroke-width="1"/>
       <!-- P 마크 -->
