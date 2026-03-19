@@ -346,11 +346,10 @@
   }
 </style>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, runTransaction, onValue, increment, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
+<!-- Firebase compat (카카오 인앱 브라우저 호환) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyBw5gC4vTDRbaj1lvI_E_DJrGF3fV5eRrs",
     authDomain: "geomdan-minwon.firebaseapp.com",
@@ -361,80 +360,83 @@
     appId: "1:670999815870:web:7c441cff8887359f3ee0ef"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
   const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
+  // 접속자 카운트 (세션 중복 방지)
   if (!sessionStorage.getItem('visited')) {
     sessionStorage.setItem('visited', '1');
-    runTransaction(ref(db, 'stats/total'), v => (v || 0) + 1);
-    runTransaction(ref(db, 'stats/today/' + today), v => (v || 0) + 1);
+    db.ref('stats/total').transaction(v => (v || 0) + 1);
+    db.ref('stats/today/' + today).transaction(v => (v || 0) + 1);
   }
 
-  onValue(ref(db, 'stats/total'), snap => {
+  // 상단 카운터 실시간 표시
+  db.ref('stats/total').on('value', snap => {
     const el = document.getElementById('count-total');
     if (el) el.textContent = (snap.val() || 0).toLocaleString();
   });
-  onValue(ref(db, 'stats/today/' + today), snap => {
+  db.ref('stats/today/' + today).on('value', snap => {
     const el = document.getElementById('count-today');
     if (el) el.textContent = (snap.val() || 0).toLocaleString();
   });
 
+  // 유형별 방문자 실시간
+  db.ref('stats/byType/resident').on('value', snap => {
+    const el = document.getElementById('count-resident');
+    if (el) el.textContent = (snap.val() || 0).toLocaleString();
+  });
+  db.ref('stats/byType/neighbor').on('value', snap => {
+    const el = document.getElementById('count-neighbor');
+    if (el) el.textContent = (snap.val() || 0).toLocaleString();
+  });
+
+  // 노선별 클릭 카운트
   window.trackMinwon = function(line) {
-    runTransaction(ref(db, 'clicks/minwon/' + line), v => (v || 0) + 1);
-    runTransaction(ref(db, 'clicks/minwon/total'), v => (v || 0) + 1);
-  };
-  window.trackOption = function(key) {
-    runTransaction(ref(db, 'clicks/options/' + key), v => (v || 0) + 1);
+    db.ref('clicks/minwon/' + line).transaction(v => (v || 0) + 1);
+    db.ref('clicks/minwon/total').transaction(v => (v || 0) + 1);
   };
 
-  onValue(ref(db, 'clicks/minwon/total'), snap => {
+  // 문구 선택 카운트
+  window.trackOption = function(key) {
+    db.ref('clicks/options/' + key).transaction(v => (v || 0) + 1);
+  };
+
+  // 민원접수 클릭 실시간
+  db.ref('clicks/minwon/total').on('value', snap => {
     const el = document.getElementById('cnt-line-total');
     if (el) el.textContent = snap.val() || 0;
   });
-
   ['line1','line2','line3'].forEach(line => {
-    onValue(ref(db, 'clicks/minwon/' + line), snap => {
+    db.ref('clicks/minwon/' + line).on('value', snap => {
       const el = document.getElementById('cnt-' + line);
       if (el) el.textContent = snap.val() || 0;
     });
   });
 
+  // 옵션별 카운트 실시간
   ['minwon1_1','minwon1_2','minwon1_3','minwon1_4',
    'minwon2_1','minwon2_2','minwon2_3','minwon2_4',
    'minwon3_1','minwon3_2','minwon3_3','minwon3_4'].forEach(key => {
-    onValue(ref(db, 'clicks/options/' + key), snap => {
+    db.ref('clicks/options/' + key).on('value', snap => {
       const el = document.getElementById('cnt-' + key);
       if (el) el.textContent = snap.val() || 0;
     });
   });
 
-  // 타입별 방문자 실시간
-  onValue(ref(db, 'stats/byType/resident'), snap => {
-    const el = document.getElementById('count-resident');
-    if (el) el.textContent = (snap.val() || 0).toLocaleString();
-  });
-  onValue(ref(db, 'stats/byType/neighbor'), snap => {
-    const el = document.getElementById('count-neighbor');
-    if (el) el.textContent = (snap.val() || 0).toLocaleString();
-  });
-
-  // ── 행동 분석 트래킹 ──────────────────────────
-
-  // 1. 체류 시간
+  // 체류 시간
   const enterTime = Date.now();
   window.addEventListener('beforeunload', () => {
     const sec = Math.round((Date.now() - enterTime) / 1000);
     if (sec > 2) {
-      runTransaction(ref(db, 'stats/totalStay'), v => (v || 0) + sec);
-      runTransaction(ref(db, 'stats/stayCount'), v => (v || 0) + 1);
+      db.ref('stats/totalStay').transaction(v => (v || 0) + sec);
+      db.ref('stats/stayCount').transaction(v => (v || 0) + 1);
     }
   });
-
-  onValue(ref(db, 'stats/totalStay'), snap => {
+  db.ref('stats/totalStay').on('value', snap => {
     const total = snap.val() || 0;
-    onValue(ref(db, 'stats/stayCount'), snap2 => {
+    db.ref('stats/stayCount').once('value').then(snap2 => {
       const cnt = snap2.val() || 1;
       const avg = Math.round(total / cnt);
       const el = document.getElementById('count-stay');
@@ -442,7 +444,7 @@
     });
   });
 
-  // 2. 스크롤 깊이 (카드별)
+  // 스크롤 깊이
   const cardScrollMap = {
     'track-card1': 'card1_대장홍대',
     'track-card2': 'card2_인천3호',
@@ -454,27 +456,25 @@
         const key = cardScrollMap[entry.target.id];
         if (key && !sessionStorage.getItem('seen_' + key)) {
           sessionStorage.setItem('seen_' + key, '1');
-          runTransaction(ref(db, 'scroll/' + key), v => (v || 0) + 1);
+          db.ref('scroll/' + key).transaction(v => (v || 0) + 1);
         }
       }
     });
   }, { threshold: 0.3 });
-
   setTimeout(() => {
     Object.keys(cardScrollMap).forEach(id => {
       const el = document.getElementById(id);
       if (el) scrollObserver.observe(el);
     });
   }, 500);
-
   Object.entries(cardScrollMap).forEach(([id, key]) => {
-    onValue(ref(db, 'scroll/' + key), snap => {
+    db.ref('scroll/' + key).on('value', snap => {
       const el = document.getElementById('scroll-' + id);
       if (el) el.textContent = snap.val() || 0;
     });
   });
 
-  // ── 관리자 기능 ──────────────────────────
+  // 관리자 기능
   window.openAdminModal = function() {
     document.getElementById('admin-modal').style.display = 'flex';
     setTimeout(() => document.getElementById('admin-pw').focus(), 100);
@@ -495,33 +495,31 @@
   };
   window.resetStat = function(path) {
     if (!confirm('초기화할까요?')) return;
-    set(ref(db, path), 0);
+    db.ref(path).set(0);
   };
   window.resetTodayStat = function() {
     if (!confirm('TODAY 초기화할까요?')) return;
-    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    set(ref(db, 'stats/today/' + today), 0);
+    db.ref('stats/today/' + today).set(0);
   };
   window.resetMinwonClicks = function() {
     if (!confirm('민원클릭 수 초기화할까요?')) return;
-    set(ref(db, 'clicks/minwon'), null);
+    db.ref('clicks/minwon').set(null);
   };
   window.resetScrollStats = function() {
     if (!confirm('카드 조회수 초기화할까요?')) return;
-    set(ref(db, 'scroll'), null);
+    db.ref('scroll').set(null);
   };
   window.resetOptionClicks = function() {
     if (!confirm('옵션 선택 횟수 초기화할까요?')) return;
-    set(ref(db, 'clicks/options'), null);
+    db.ref('clicks/options').set(null);
   };
   window.resetAll = function() {
     if (!confirm('⚠️ 모든 데이터를 초기화합니다. 계속할까요?')) return;
-    set(ref(db, '/'), null);
+    db.ref('/').set(null);
   };
 
-  // ── 입장 팝업 ──────────────────────────
+  // 입장 팝업
   let currentType = 'resident';
-
   window.selectType = function(type) {
     currentType = type;
     if (type === 'resident') {
@@ -544,12 +542,10 @@
       document.getElementById('fields-outside').style.display = 'block';
     }
   };
-
   window.submitEntry = function() {
     const err = document.getElementById('entry-err');
     err.style.display = 'none';
     let userData = {};
-
     if (currentType === 'resident') {
       const dong = document.getElementById('input-dong').value.trim();
       const floor = document.getElementById('input-floor').value.trim();
@@ -561,49 +557,46 @@
     } else {
       const name = document.getElementById('input-name').value.trim();
       if (!name) { err.textContent = '성함을 입력해 주세요.'; err.style.display = 'block'; return; }
-      userData = { type: '검단 주민', name, label: '검단 주민 ' + name };
+      userData = { type: '검단주민', name, label: '검단주민 ' + name };
     }
-
-    // Firebase에 방문자 기록
     const now = new Date();
     const ts = now.toISOString();
     const key = ts.replace(/[:.]/g, '-');
-    set(ref(db, 'visitors/' + key), {
+    db.ref('visitors/' + key).set({
       ...userData,
       timestamp: ts,
       date: now.toLocaleDateString('ko-KR'),
       time: now.toLocaleTimeString('ko-KR')
     });
-    // 타입별 카운트
     const typeKey = userData.type === '입주예정자' ? 'resident' : 'neighbor';
-    runTransaction(ref(db, 'stats/byType/' + typeKey), v => (v || 0) + 1);
-
-    // 세션에 저장
+    db.ref('stats/byType/' + typeKey).transaction(v => (v || 0) + 1);
     sessionStorage.setItem('entry-done', '1');
     sessionStorage.setItem('entry-label', userData.label);
-
     document.getElementById('entry-modal').style.display = 'none';
     document.body.style.overflow = '';
   };
-
-  // 이미 입력한 경우 팝업 스킵
   if (sessionStorage.getItem('entry-done')) {
     document.getElementById('entry-modal').style.display = 'none';
   } else {
     document.body.style.overflow = 'hidden';
   }
 
-  // ── 엑셀 다운로드 (xlsx 시트 3개) ──────────────────────────
+  // ESC 차단
+  document.addEventListener('keydown', function(e) {
+    if (!sessionStorage.getItem('entry-done')) {
+      if (e.key === 'Escape') e.preventDefault();
+    }
+  });
+
+  // 엑셀 다운로드
   window.downloadExcel = async function() {
-    const snap = await get(ref(db, 'visitors'));
+    const snap = await db.ref('visitors').once('value');
     if (!snap.exists()) { alert('방문자 데이터가 없습니다.'); return; }
     const data = Object.values(snap.val());
-
     const header = ['타입','동','층','닉네임/성함','날짜','시간'];
     const allRows = [header];
     const residentRows = [['동','층','닉네임','날짜','시간']];
     const neighborRows = [['성함','날짜','시간']];
-
     data.forEach(v => {
       if (v.type === '입주예정자') {
         allRows.push(['입주예정자', v.dong||'', v.floor||'', v.nick||'', v.date||'', v.time||'']);
@@ -613,22 +606,12 @@
         neighborRows.push([v.name||'', v.date||'', v.time||'']);
       }
     });
-
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(allRows), '전체');
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(residentRows), '검단 푸르지오 더 파크');
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(neighborRows), '검단 주민');
-
     XLSX.writeFile(wb, '검단민원_방문자_' + new Date().toISOString().slice(0,10) + '.xlsx');
   };
-
-  // ESC 키 및 뒤로가기로 팝업 못 닫게
-  document.addEventListener('keydown', function(e) {
-    if (!sessionStorage.getItem('entry-done')) {
-      if (e.key === 'Escape') e.preventDefault();
-    }
-  });
-
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
