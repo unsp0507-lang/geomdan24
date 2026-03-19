@@ -387,6 +387,7 @@
   // 노선별 민원접수 클릭 카운트
   window.trackMinwon = function(line) {
     runTransaction(ref(db, 'clicks/minwon/' + line), v => (v || 0) + 1);
+    runTransaction(ref(db, 'clicks/minwon/total'), v => (v || 0) + 1);
   };
 
   // 문구 선택 카운트
@@ -395,6 +396,11 @@
   };
 
   // 노선별 카운트 실시간 표시
+  onValue(ref(db, 'clicks/minwon/total'), snap => {
+    const el = document.getElementById('cnt-line-total');
+    if (el) el.textContent = snap.val() || 0;
+  });
+
   ['line1','line2','line3'].forEach(line => {
     onValue(ref(db, 'clicks/minwon/' + line), snap => {
       const el = document.getElementById('cnt-' + line);
@@ -411,6 +417,126 @@
       if (el) el.textContent = snap.val() || 0;
     });
   });
+</script>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, runTransaction, onValue, increment, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBw5gC4vTDRbaj1lvI_E_DJrGF3fV5eRrs",
+    authDomain: "geomdan-minwon.firebaseapp.com",
+    databaseURL: "https://geomdan-minwon-default-rtdb.firebaseio.com",
+    projectId: "geomdan-minwon",
+    storageBucket: "geomdan-minwon.firebasestorage.app",
+    messagingSenderId: "670999815870",
+    appId: "1:670999815870:web:7c441cff8887359f3ee0ef"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+
+  if (!sessionStorage.getItem('visited')) {
+    sessionStorage.setItem('visited', '1');
+    runTransaction(ref(db, 'stats/total'), v => (v || 0) + 1);
+    runTransaction(ref(db, 'stats/today/' + today), v => (v || 0) + 1);
+  }
+
+  onValue(ref(db, 'stats/total'), snap => {
+    const el = document.getElementById('count-total');
+    if (el) el.textContent = (snap.val() || 0).toLocaleString();
+  });
+  onValue(ref(db, 'stats/today/' + today), snap => {
+    const el = document.getElementById('count-today');
+    if (el) el.textContent = (snap.val() || 0).toLocaleString();
+  });
+
+  window.trackMinwon = function(line) {
+    runTransaction(ref(db, 'clicks/minwon/' + line), v => (v || 0) + 1);
+    runTransaction(ref(db, 'clicks/minwon/total'), v => (v || 0) + 1);
+  };
+  window.trackOption = function(key) {
+    runTransaction(ref(db, 'clicks/options/' + key), v => (v || 0) + 1);
+  };
+
+  onValue(ref(db, 'clicks/minwon/total'), snap => {
+    const el = document.getElementById('cnt-line-total');
+    if (el) el.textContent = snap.val() || 0;
+  });
+
+  ['line1','line2','line3'].forEach(line => {
+    onValue(ref(db, 'clicks/minwon/' + line), snap => {
+      const el = document.getElementById('cnt-' + line);
+      if (el) el.textContent = snap.val() || 0;
+    });
+  });
+
+  ['minwon1_1','minwon1_2','minwon1_3','minwon1_4',
+   'minwon2_1','minwon2_2','minwon2_3','minwon2_4',
+   'minwon3_1','minwon3_2','minwon3_3','minwon3_4'].forEach(key => {
+    onValue(ref(db, 'clicks/options/' + key), snap => {
+      const el = document.getElementById('cnt-' + key);
+      if (el) el.textContent = snap.val() || 0;
+    });
+  });
+
+  // ── 행동 분석 트래킹 ──────────────────────────
+
+  // 1. 체류 시간
+  const enterTime = Date.now();
+  window.addEventListener('beforeunload', () => {
+    const sec = Math.round((Date.now() - enterTime) / 1000);
+    if (sec > 2) {
+      runTransaction(ref(db, 'stats/totalStay'), v => (v || 0) + sec);
+      runTransaction(ref(db, 'stats/stayCount'), v => (v || 0) + 1);
+    }
+  });
+
+  onValue(ref(db, 'stats/totalStay'), snap => {
+    const total = snap.val() || 0;
+    onValue(ref(db, 'stats/stayCount'), snap2 => {
+      const cnt = snap2.val() || 1;
+      const avg = Math.round(total / cnt);
+      const el = document.getElementById('count-stay');
+      if (el) el.textContent = avg >= 60 ? Math.floor(avg/60) + '분 ' + (avg%60) + '초' : avg + '초';
+    });
+  });
+
+  // 2. 스크롤 깊이 (카드별)
+  const cardScrollMap = {
+    'track-card1': 'card1_대장홍대',
+    'track-card2': 'card2_인천3호',
+    'track-card3': 'card3_인천1호'
+  };
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const key = cardScrollMap[entry.target.id];
+        if (key && !sessionStorage.getItem('seen_' + key)) {
+          sessionStorage.setItem('seen_' + key, '1');
+          runTransaction(ref(db, 'scroll/' + key), v => (v || 0) + 1);
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  setTimeout(() => {
+    Object.keys(cardScrollMap).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) scrollObserver.observe(el);
+    });
+  }, 500);
+
+  Object.entries(cardScrollMap).forEach(([id, key]) => {
+    onValue(ref(db, 'scroll/' + key), snap => {
+      const el = document.getElementById('scroll-' + id);
+      if (el) el.textContent = snap.val() || 0;
+    });
+  });
+
 </script>
 </head>
 <body>
@@ -458,23 +584,38 @@
 </div>
 
 
-<div style="background:#0f2e2a;border-bottom:1px solid rgba(45,107,100,0.4);padding:10px 20px;display:flex;justify-content:center;gap:32px;font-family:'Noto Sans KR',sans-serif;">
-  <div style="text-align:center;">
-    <div style="font-size:11px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">TOTAL 방문자</div>
-    <div style="font-size:22px;font-weight:900;color:#e8d5a3;" id="count-total">-</div>
+<div style="background:#0f2e2a;border-bottom:1px solid rgba(45,107,100,0.4);padding:10px 16px;display:flex;flex-wrap:wrap;justify-content:center;gap:16px;font-family:'Noto Sans KR',sans-serif;">
+  <div style="text-align:center;min-width:64px;">
+    <div style="font-size:10px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">TOTAL</div>
+    <div style="font-size:20px;font-weight:900;color:#e8d5a3;" id="count-total">-</div>
+  </div>
+  <div style="width:1px;background:rgba(45,107,100,0.4);"></div>
+  <div style="text-align:center;min-width:64px;">
+    <div style="font-size:10px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">TODAY</div>
+    <div style="font-size:20px;font-weight:900;color:#7ecfc4;" id="count-today">-</div>
+  </div>
+  <div style="width:1px;background:rgba(45,107,100,0.4);"></div>
+  <div style="text-align:center;min-width:64px;">
+    <div style="font-size:10px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">평균체류</div>
+    <div style="font-size:20px;font-weight:900;color:#7ecfc4;" id="count-stay">-</div>
   </div>
   <div style="width:1px;background:rgba(45,107,100,0.4);"></div>
   <div style="text-align:center;">
-    <div style="font-size:11px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">TODAY 방문자</div>
-    <div style="font-size:22px;font-weight:900;color:#7ecfc4;" id="count-today">-</div>
-  </div>
-  <div style="width:1px;background:rgba(45,107,100,0.4);"></div>
-  <div style="text-align:center;">
-    <div style="font-size:11px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">민원 접수 클릭</div>
-    <div style="font-size:13px;font-weight:700;color:#ffffff;margin-top:4px;line-height:1.8;">
+    <div style="font-size:10px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">민원접수 클릭</div>
+    <div style="font-size:12px;font-weight:700;color:#fff;margin-top:3px;line-height:1.9;">
+      전체 <span id="cnt-line-total" style="color:#fff;font-size:14px;">-</span> &nbsp;│&nbsp;
       대장홍대 <span id="cnt-line1" style="color:#e8d5a3;">-</span> &nbsp;
       인천3호 <span id="cnt-line2" style="color:#e8d5a3;">-</span> &nbsp;
       인천1호 <span id="cnt-line3" style="color:#e8d5a3;">-</span>
+    </div>
+  </div>
+  <div style="width:1px;background:rgba(45,107,100,0.4);"></div>
+  <div style="text-align:center;">
+    <div style="font-size:10px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">카드 조회수</div>
+    <div style="font-size:12px;font-weight:700;color:#fff;margin-top:3px;line-height:1.9;">
+      대장홍대 <span id="scroll-track-card1" style="color:#e8d5a3;">-</span><br>
+      인천3호 <span id="scroll-track-card2" style="color:#e8d5a3;">-</span><br>
+      인천1호 <span id="scroll-track-card3" style="color:#e8d5a3;">-</span>
     </div>
   </div>
 </div>
@@ -494,7 +635,7 @@
   <p class="section-title">민원 3종 — 하나씩 접수해 주세요</p>
 
   <!-- 민원 1 -->
-  <div class="card">
+  <div class="card" id="track-card1">
     <div class="card-header">
       <div class="card-num green">1</div>
       <div>
@@ -516,10 +657,10 @@
       <div class="personal-box">
         <div class="personal-label">✏️ 의견 선택 → 선택에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options1">
-          <div class="personal-option" onclick="trackOption('minwon3_1'); selectOption(this,1,'minwon3_1')">저는 검단신도시 입주예정자로서 서울 출퇴근 교통 개선이 필요합니다. <span id="cnt-minwon3_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon3_2'); selectOption(this,1,'minwon3_2')">저는 현재 검단신도시에 거주하며 서울 이동에 많은 불편을 겪고 있습니다. <span id="cnt-minwon3_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon3_3'); selectOption(this,1,'minwon3_3')">저는 수도권 서북부 광역 교통망 확충이 필요하다고 생각합니다. <span id="cnt-minwon3_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon3_4'); selectOption(this,1,'minwon3_4')">저는 검단신도시 발전을 위해 광역 철도 연결이 필요하다고 생각합니다. <span id="cnt-minwon3_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon3_1'); trackOption('minwon3_1'); selectOption(this,1,'minwon3_1')">저는 검단신도시 입주예정자로서 서울 출퇴근 교통 개선이 필요합니다. <span id="cnt-minwon3_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon3_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon3_2'); trackOption('minwon3_2'); selectOption(this,1,'minwon3_2')">저는 현재 검단신도시에 거주하며 서울 이동에 많은 불편을 겪고 있습니다. <span id="cnt-minwon3_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon3_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon3_3'); trackOption('minwon3_3'); selectOption(this,1,'minwon3_3')">저는 수도권 서북부 광역 교통망 확충이 필요하다고 생각합니다. <span id="cnt-minwon3_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon3_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon3_4'); trackOption('minwon3_4'); selectOption(this,1,'minwon3_4')">저는 검단신도시 발전을 위해 광역 철도 연결이 필요하다고 생각합니다. <span id="cnt-minwon3_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon3_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
         </div>
       </div>
 
@@ -531,7 +672,7 @@
       <button class="copy-btn green" onclick="copyText(this,1)">📋 민원 내용 복사하기</button>
 
       <div class="submit-btns">
-        <a class="submit-btn" onclick="trackMinwon('line1')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" onclick="trackMinwon('line1')" onclick="trackMinwon('line1')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
       </div>
 
       <button class="steps-toggle" onclick="toggleSteps(this)">
@@ -550,7 +691,7 @@
   </div>
 
   <!-- 민원 2 -->
-  <div class="card">
+  <div class="card" id="track-card2">
     <div class="card-header">
       <div class="card-num amber">2</div>
       <div>
@@ -570,10 +711,10 @@
       <div class="personal-box">
         <div class="personal-label">✏️ 의견 선택 → 선택에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options2">
-          <div class="personal-option" onclick="trackOption('minwon2_1'); selectOption(this,2,'minwon2_1')">저는 검단신도시 입주예정자로서 철도 교통 인프라 확충이 필요하다고 생각합니다. <span id="cnt-minwon2_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon2_2'); selectOption(this,2,'minwon2_2')">저는 현재 검단신도시에 거주하며 대중교통 이용에 불편을 겪고 있습니다. <span id="cnt-minwon2_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon2_3'); selectOption(this,2,'minwon2_3')">저는 인근 지역 시민으로서 검단신도시 교통망 확충이 필요하다고 생각합니다. <span id="cnt-minwon2_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon2_4'); selectOption(this,2,'minwon2_4')">저는 검단신도시 발전을 위해 철도망 구축이 필요하다고 생각합니다. <span id="cnt-minwon2_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon2_1'); trackOption('minwon2_1'); selectOption(this,2,'minwon2_1')">저는 검단신도시 입주예정자로서 철도 교통 인프라 확충이 필요하다고 생각합니다. <span id="cnt-minwon2_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon2_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon2_2'); trackOption('minwon2_2'); selectOption(this,2,'minwon2_2')">저는 현재 검단신도시에 거주하며 대중교통 이용에 불편을 겪고 있습니다. <span id="cnt-minwon2_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon2_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon2_3'); trackOption('minwon2_3'); selectOption(this,2,'minwon2_3')">저는 인근 지역 시민으로서 검단신도시 교통망 확충이 필요하다고 생각합니다. <span id="cnt-minwon2_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon2_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon2_4'); trackOption('minwon2_4'); selectOption(this,2,'minwon2_4')">저는 검단신도시 발전을 위해 철도망 구축이 필요하다고 생각합니다. <span id="cnt-minwon2_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon2_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
         </div>
       </div>
 
@@ -585,7 +726,7 @@
       <button class="copy-btn amber" onclick="copyText(this,2)">📋 민원 내용 복사하기</button>
 
       <div class="submit-btns">
-        <a class="submit-btn" onclick="trackMinwon('line2')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" onclick="trackMinwon('line2')" onclick="trackMinwon('line2')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
       </div>
 
       <button class="steps-toggle" onclick="toggleSteps(this)">
@@ -604,7 +745,7 @@
   </div>
 
   <!-- 민원 3 -->
-  <div class="card">
+  <div class="card" id="track-card3">
     <div class="card-header">
       <div class="card-num blue">3</div>
       <div>
@@ -624,10 +765,10 @@
       <div class="personal-box">
         <div class="personal-label">✏️ 의견 선택 → 선택에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options3">
-          <div class="personal-option" onclick="trackOption('minwon1_1'); selectOption(this,3,'minwon1_1')">저는 검단신도시 입주예정자로서 철도 교통 인프라 부족으로 생활 이동에 대한 우려가 있습니다. <span id="cnt-minwon1_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon1_2'); selectOption(this,3,'minwon1_2')">저는 현재 검단신도시에 거주하며 서울 및 수도권 이동에 큰 불편을 겪고 있습니다. <span id="cnt-minwon1_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon1_3'); selectOption(this,3,'minwon1_3')">저는 인근 지역 시민으로서 검단신도시의 철도 교통 인프라 확충이 필요하다고 생각합니다. <span id="cnt-minwon1_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
-          <div class="personal-option" onclick="trackOption('minwon1_4'); selectOption(this,3,'minwon1_4')">저는 검단신도시 발전을 위해 철도망 확충이 필요하다고 생각합니다. <span id="cnt-minwon1_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon1_1'); trackOption('minwon1_1'); selectOption(this,3,'minwon1_1')">저는 검단신도시 입주예정자로서 철도 교통 인프라 부족으로 생활 이동에 대한 우려가 있습니다. <span id="cnt-minwon1_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon1_1" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon1_2'); trackOption('minwon1_2'); selectOption(this,3,'minwon1_2')">저는 현재 검단신도시에 거주하며 서울 및 수도권 이동에 큰 불편을 겪고 있습니다. <span id="cnt-minwon1_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon1_2" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon1_3'); trackOption('minwon1_3'); selectOption(this,3,'minwon1_3')">저는 인근 지역 시민으로서 검단신도시의 철도 교통 인프라 확충이 필요하다고 생각합니다. <span id="cnt-minwon1_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon1_3" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
+          <div class="personal-option" onclick="trackOption('minwon1_4'); trackOption('minwon1_4'); selectOption(this,3,'minwon1_4')">저는 검단신도시 발전을 위해 철도망 확충이 필요하다고 생각합니다. <span id="cnt-minwon1_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span> <span id="cnt-minwon1_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
         </div>
       </div>
 
@@ -639,7 +780,7 @@
       <button class="copy-btn blue" onclick="copyText(this,3)">📋 민원 내용 복사하기</button>
 
       <div class="submit-btns">
-        <a class="submit-btn" onclick="trackMinwon('line3')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" onclick="trackMinwon('line3')" onclick="trackMinwon('line3')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
       </div>
 
       <button class="steps-toggle" onclick="toggleSteps(this)">
