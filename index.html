@@ -31,7 +31,6 @@
     font-size: 15px;
     line-height: 1.6;
   }
-
   .header {
     padding: 48px 20px 36px;
     text-align: center;
@@ -92,7 +91,6 @@
     50% { filter: drop-shadow(0 0 12px rgba(232,213,163,0.7)); }
   }
   .prugio-mark { animation: pMarkSpin 2.5s ease-in-out infinite; }
-
   .notice {
     background: var(--cream-light);
     border: 1px solid var(--cream-border);
@@ -103,15 +101,12 @@
   .notice-icon { font-size: 16px; flex-shrink:0; margin-top:2px; }
   .notice p { font-size: 13px; color: #7a5a1a; line-height: 1.7; }
   .notice strong { color: #a07820; }
-
   .wrap { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
-
   .section-title {
     font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
     color: var(--muted); text-transform: uppercase;
     margin-bottom: 14px; margin-top: 28px;
   }
-
   .card {
     background: var(--bg2);
     border: 1px solid var(--border);
@@ -120,7 +115,6 @@
     transition: box-shadow 0.2s;
   }
   .card:hover { box-shadow: 0 4px 16px rgba(26,74,69,0.14); }
-
   .card-header {
     padding: 20px 20px 16px;
     border-bottom: 1px solid var(--border);
@@ -138,14 +132,11 @@
     0%, 100% { box-shadow: 0 0 0px rgba(232,213,163,0); }
     50% { box-shadow: 0 0 10px rgba(232,213,163,0.4), inset 0 0 6px rgba(232,213,163,0.1); }
   }
-
   .card-agency { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
   .card-agency.blue, .card-agency.green, .card-agency.amber { color: var(--primary-mid); }
   .card-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; }
-
   .card-body { padding: 16px 20px; }
   .text-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; }
-
   .minwon-text {
     background: var(--bg3); border: 1px solid var(--border);
     border-radius: 10px; padding: 14px;
@@ -154,7 +145,6 @@
     max-height: 180px; overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
   }
-
   .personal-box {
     margin-top: 12px; background: var(--primary-light);
     border: 1px solid var(--primary-border); border-radius: 10px; padding: 14px;
@@ -168,7 +158,6 @@
   }
   .personal-option:hover { border-color: var(--primary); background: var(--primary-light); }
   .personal-option.selected { border-color: var(--primary); background: var(--primary); color: #ffffff; font-weight: 500; }
-
   .copy-btn {
     width: 100%; margin-top: 12px; padding: 14px;
     border-radius: 10px; border: 1px solid;
@@ -195,7 +184,6 @@
     background: var(--primary-mid);
   }
   .copy-btn.copied { background: #2d6b64 !important; border-color: #1a4a45 !important; color: #e8d5a3 !important; }
-
   .submit-btns { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
   .submit-btn {
     display: flex; align-items: center; justify-content: space-between;
@@ -206,7 +194,6 @@
   }
   .submit-btn:hover { background: var(--primary); color: var(--cream); border-color: var(--primary); }
   .submit-btn span { font-size: 16px; }
-
   .steps-toggle {
     width: 100%; text-align: left; padding: 13px 0;
     background: none; border: none; border-top: 1px solid var(--border);
@@ -219,7 +206,6 @@
   .steps-toggle.open .arrow { transform: rotate(180deg); }
   .steps-content { display: none; padding: 14px 0 4px; }
   .steps-content.open { display: block; }
-
   .step-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
   .step-dot {
     width: 22px; height: 22px; border-radius: 50%;
@@ -230,12 +216,9 @@
   }
   .step-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
   .step-text strong { color: var(--text); font-weight: 600; }
-
   .footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px 0 40px; }
-
   /* wrap은 원래대로 */
   .wrap { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
-
   /* fixed 사이드 레일 컨테이너 */
   .side-rail {
     position: fixed;
@@ -247,11 +230,9 @@
   }
   .side-rail.left  { left: 0; }
   .side-rail.right { right: 0; }
-
   @media (min-width: 700px) {
     .side-rail { display: none; }
   }
-
   /* 레일 라인 */
   .side-rail::before {
     content: '';
@@ -266,7 +247,6 @@
       transparent 100%
     );
   }
-
   /* 흘러내리는 빛 */
   .rail-light {
     position: absolute;
@@ -283,7 +263,6 @@
     92%  { opacity:1; }
     100% { top: 100vh; opacity:0; }
   }
-
   /* 역 아이템 */
   .station-item {
     position: absolute;
@@ -293,7 +272,6 @@
     align-items: center;
     gap: 3px;
   }
-
   /* 도트 */
   .station-item .s-dot {
     width: 8px; height: 8px; border-radius: 50%;
@@ -307,7 +285,6 @@
     0%,100% { border-color: rgba(45,107,100,0.4); box-shadow: none; }
     50%      { border-color: rgba(232,213,163,0.9); box-shadow: 0 0 5px rgba(232,213,163,0.5); }
   }
-
   /* 역 이름 - 세로 */
   .station-item .s-sign {
     writing-mode: vertical-rl;
@@ -335,7 +312,6 @@
     text-shadow: 0 0 6px rgba(232,213,163,1);
     box-shadow: 0 0 5px rgba(232,213,163,0.3);
   }
-
   @keyframes neonFlicker {
     0%,100% { opacity:1; }
     91% { opacity:1; }
@@ -344,13 +320,11 @@
     95% { opacity:0.5; }
     96% { opacity:1; }
   }
-
   @media (max-width: 600px) {
     #stats-bar { gap: 8px !important; padding: 8px !important; font-size: 11px; }
     #stats-bar > div[style*="width:1px"] { display: none; }
   }
 </style>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <!-- Firebase compat (카카오 인앱 브라우저 호환) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -365,19 +339,15 @@
     messagingSenderId: "670999815870",
     appId: "1:670999815870:web:7c441cff8887359f3ee0ef"
   };
-
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
-
   const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-
   // 접속자 카운트 (세션 중복 방지)
   if (!sessionStorage.getItem('visited')) {
     sessionStorage.setItem('visited', '1');
     db.ref('stats/total').transaction(v => (v || 0) + 1);
     db.ref('stats/today/' + today).transaction(v => (v || 0) + 1);
   }
-
   // 상단 카운터 실시간 표시
   db.ref('stats/total').on('value', snap => {
     const el = document.getElementById('count-total');
@@ -387,15 +357,13 @@
     const el = document.getElementById('count-today');
     if (el) el.textContent = (snap.val() || 0).toLocaleString();
   });
-
   // 유형별 방문자 실시간
-  ['purgio','ecobi','elif','geomdan','origin'].forEach(function(key) {
+  ['purgio','ecobi','thesharp','elif','geomdan','origin'].forEach(function(key) {
     db.ref('stats/byType/' + key).on('value', function(snap) {
       var el = document.getElementById('count-' + key);
       if (el) el.textContent = (snap.val() || 0).toLocaleString();
     });
   });
-
   // 노선별 클릭 카운트
   window.trackMinwon = function(line) {
     db.ref('clicks/minwon/' + line).transaction(function(v) { return (v || 0) + 1; });
@@ -409,12 +377,10 @@
       db.ref('visitors/' + userKey + '/' + field).set('참여');
     }
   };
-
   // 문구 선택 카운트
   window.trackOption = function(key) {
     db.ref('clicks/options/' + key).transaction(v => (v || 0) + 1);
   };
-
   // 민원접수 클릭 실시간
   db.ref('clicks/minwon/total').on('value', snap => {
     const el = document.getElementById('cnt-line-total');
@@ -426,7 +392,6 @@
       if (el) el.textContent = snap.val() || 0;
     });
   });
-
   // 옵션별 카운트 실시간
   ['minwon1_1','minwon1_2','minwon1_3','minwon1_4',
    'minwon2_1','minwon2_2','minwon2_3','minwon2_4',
@@ -436,7 +401,6 @@
       if (el) el.textContent = snap.val() || 0;
     });
   });
-
   // 체류 시간
   const enterTime = Date.now();
   window.addEventListener('beforeunload', () => {
@@ -455,7 +419,6 @@
       if (el) el.textContent = avg >= 60 ? Math.floor(avg/60) + '분 ' + (avg%60) + '초' : avg + '초';
     });
   });
-
   // 스크롤 깊이
   const cardScrollMap = {
     'track-card1': 'card1_대장홍대',
@@ -485,7 +448,6 @@
       if (el) el.textContent = snap.val() || 0;
     });
   });
-
   // 관리자 기능
   window.openAdminModal = function() {
     document.getElementById('admin-modal').style.display = 'flex';
@@ -529,12 +491,11 @@
     if (!confirm('⚠️ 모든 데이터를 초기화합니다. 계속할까요?')) return;
     db.ref('/').set(null);
   };
-
   // 입장 팝업
   var currentType = null;
   window.selectType = function(type) {
     currentType = type;
-    var btns = ['purgio','ecobi','elif','geomdan','origin'];
+    var btns = ['purgio','ecobi','thesharp','elif','geomdan','origin'];
     btns.forEach(function(b) {
       var el = document.getElementById('btn-' + b);
       if (!el) return;
@@ -548,7 +509,6 @@
         el.style.color = '#888';
       }
     });
-
   };
   window.submitEntry = function() {
     var err = document.getElementById('entry-err');
@@ -556,8 +516,9 @@
     var userData = {};
     var typeMap = {
       'purgio': '검푸파입주예정자',
-      'ecobi': '에코비스타입주예정자',
-      'elif': '엘리프입주예정자',
+      'ecobi': '이검에입주예정자',
+      'thesharp': '더레파입주예정자',
+      'elif': '엘검포입주예정자',
       'geomdan': '검단신도시입주예정자및입주민',
       'origin': '원도심입주민'
     };
@@ -586,64 +547,59 @@
   } else {
     document.body.style.overflow = 'hidden';
   }
-
   // ESC 차단
   document.addEventListener('keydown', function(e) {
     if (!sessionStorage.getItem('entry-done')) {
       if (e.key === 'Escape') e.preventDefault();
     }
   });
-
-
 </script>
 </head>
 <body>
 <!-- 입장 팝업 -->
 <div id="entry-modal" onclick="event.stopPropagation()" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;font-family:'Noto Sans KR',sans-serif;">
-  <div style="background:#0f2e2a;border:1px solid #2d6b64;border-radius:16px;padding:32px 24px;width:320px;max-width:88vw;overflow:hidden;box-sizing:border-box;">
+  <div style="background:#0f2e2a;border:1px solid #2d6b64;border-radius:16px;padding:32px 20px;width:340px;max-width:92vw;overflow:hidden;box-sizing:border-box;">
     <div style="text-align:center;margin-bottom:20px;">
       <div style="font-size:13px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;margin-bottom:8px;">검단신도시 교통 민원</div>
       <div style="font-size:18px;font-weight:900;color:#e8d5a3;line-height:1.4;">입장 전 해당하는 정보를<br>선택해 주세요.</div>
     </div>
-
-    <!-- 구분 선택 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;">
+    <!-- 구분 선택 : 푸이샵엘 4단지 -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:8px;">
       <button id="btn-purgio" onclick="selectType('purgio')"
-        style="padding:8px 4px;border-radius:8px;border:2px solid #2d6b64;background:#1a4a45;color:#e8d5a3;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;">
-        검푸파<br>입주예정자
+        style="padding:10px 2px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:9px;font-weight:700;cursor:pointer;line-height:1.5;font-family:inherit;">
+        검단신도시<br>푸르지오 더파크
       </button>
       <button id="btn-ecobi" onclick="selectType('ecobi')"
-        style="padding:8px 4px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;">
-        에코비스타<br>입주예정자
+        style="padding:10px 2px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:9px;font-weight:700;cursor:pointer;line-height:1.5;font-family:inherit;">
+        이편한세상<br>검단 에코비스타
+      </button>
+      <button id="btn-thesharp" onclick="selectType('thesharp')"
+        style="padding:10px 2px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:9px;font-weight:700;cursor:pointer;line-height:1.5;font-family:inherit;">
+        더샵<br>검단레이크파크
       </button>
       <button id="btn-elif" onclick="selectType('elif')"
-        style="padding:8px 4px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;">
-        엘리프<br>입주예정자
+        style="padding:10px 2px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:9px;font-weight:700;cursor:pointer;line-height:1.5;font-family:inherit;">
+        엘리프<br>검단 포레듀
       </button>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;">
       <button id="btn-geomdan" onclick="selectType('geomdan')"
-        style="padding:8px 4px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;">
+        style="padding:8px 4px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;font-family:inherit;">
         검단신도시<br>입주예정자 및 입주민
       </button>
       <button id="btn-origin" onclick="selectType('origin')"
-        style="padding:8px 4px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;">
+        style="padding:8px 4px;border-radius:8px;border:2px solid #444;background:#1a1a1a;color:#888;font-size:10px;font-weight:700;cursor:pointer;line-height:1.5;font-family:inherit;">
         원도심<br>입주민
       </button>
     </div>
-
     <div style="color:#9bbdaf;font-size:12px;text-align:center;padding:6px 0 4px;">버튼 선택 후 바로 입장하실 수 있습니다 😊</div>
-
     <div id="entry-err" style="color:#ff6666;font-size:12px;margin-bottom:10px;display:none;text-align:center;"></div>
-
     <button onclick="submitEntry()"
       style="width:100%;padding:13px;border-radius:8px;border:none;background:linear-gradient(135deg,#1a4a45,#2d6b64);color:#e8d5a3;font-size:15px;font-weight:900;cursor:pointer;letter-spacing:0.5px;">
       입장하기 →
     </button>
   </div>
 </div>
-
-
 <!-- 왼쪽 고정 레일 (인천1호선) -->
 <div class="side-rail left">
   <div class="rail-light"></div>
@@ -664,7 +620,6 @@
     <div class="s-sign" style="border-color:rgba(232,213,163,0.8);color:#e8d5a3;text-shadow:0 0 8px rgba(232,213,163,1);box-shadow:0 0 8px rgba(232,213,163,0.4);">검단구청역(가칭)</div>
   </div>
 </div>
-
 <!-- 오른쪽 고정 레일 (대장-홍대선) -->
 <div class="side-rail right">
   <div class="rail-light"></div>
@@ -685,13 +640,11 @@
     <div class="s-sign" style="border-color:rgba(232,213,163,0.8);color:#e8d5a3;text-shadow:0 0 8px rgba(232,213,163,1);box-shadow:0 0 8px rgba(232,213,163,0.4);">검단구청역(가칭)</div>
   </div>
 </div>
-
-
 <div style="background:#0a1f1c;border-bottom:2px solid #2d6b64;padding:12px 20px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px;font-family:'Noto Sans KR',sans-serif;" id="stats-bar">
   <div style="text-align:center;">
     <div style="font-size:10px;color:#9bbdaf;font-weight:600;letter-spacing:0.5px;">유형별 방문자</div>
     <div style="font-size:12px;font-weight:700;color:#fff;margin-top:3px;line-height:1.9;">
-      검푸파 <span id="count-purgio" style="color:#e8d5a3;">-</span> 에코비스타 <span id="count-ecobi" style="color:#e8d5a3;">-</span> 엘리프 <span id="count-elif" style="color:#e8d5a3;">-</span><br>
+      검푸파 <span id="count-purgio" style="color:#e8d5a3;">-</span> 이검에 <span id="count-ecobi" style="color:#e8d5a3;">-</span> 더레파 <span id="count-thesharp" style="color:#e8d5a3;">-</span> 엘검포 <span id="count-elif" style="color:#e8d5a3;">-</span><br>
       신도시 <span id="count-geomdan" style="color:#7ecfc4;">-</span> 원도심 <span id="count-origin" style="color:#7ecfc4;">-</span>
     </div>
   </div>
@@ -710,7 +663,6 @@
     <button onclick="openAdminModal()" style="background:rgba(255,255,255,0.05);color:#666;border:1px solid #333;padding:6px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">🔐</button>
   </div>
 </div>
-
 <!-- 관리자 패널 -->
 <div id="admin-bar" style="display:none;background:#1a0000;border-bottom:2px solid #cc3333;padding:10px 16px;font-family:'Noto Sans KR',sans-serif;">
   <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;">
@@ -726,7 +678,6 @@
     <button onclick="closeAdmin()" style="background:#333;color:#aaa;border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;">닫기</button>
   </div>
 </div>
-
 <!-- 관리자 로그인 모달 -->
 <div id="admin-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#1a1a1a;border:1px solid #444;border-radius:12px;padding:28px 24px;width:280px;text-align:center;">
@@ -744,22 +695,19 @@
   <h1>검단구청역을 중심으로<br>3개 철도가 연결되어야 합니다</h1>
   <p>인천1호선 · 인천순환3호선 · 대장-홍대선<br>검단구청 복합청사 개발 시 교통 허브가 될 검단구청역,<br>지금 주민 여러분의 민원이 필요합니다</p>
 </div>
-
 <div class="notice">
   <span class="notice-icon">⚠️</span>
   <p><strong>동일한 내용이 반복 제출될 경우 효과가 감소할 수 있습니다.</strong><br>
   아래에서 본인 상황에 맞는 문장을 하나 선택하면 자동으로 함께 복사됩니다.</p>
 </div>
-
 <div class="wrap">
   <p class="section-title">민원 3종 — 하나씩 접수해 주세요</p>
-
   <!-- 민원 1 -->
   <div class="card" id="track-card1">
     <div class="card-header">
       <div class="card-num green">1</div>
       <div>
-        
+
         <div class="card-title">대장-홍대선 검단 연장 및 검단구청역 신설 청원</div>
         <div style="margin-top:8px;font-size:13px;font-weight:700;color:var(--primary);line-height:1.5;">대장-홍대선 검단 연장 및 검단구청역 신설 추진 요청 민원을 제출해 주세요 🙏</div>
       </div>
@@ -767,13 +715,9 @@
     <div class="card-body">
       <div class="text-label">📌 왜 민원을 넣어야 하나요?</div>
       <div class="minwon-text" style="background:var(--primary-light);border-color:var(--primary-border);color:var(--primary);">대장-홍대선은 수도권 서북부와 서울을 연결하는 핵심 광역 철도 노선입니다. 해당 노선이 검단신도시까지 연장될 경우 서울 접근성이 크게 개선되어 검단신도시 주민들의 출퇴근 여건과 생활 편의가 크게 향상될 것으로 기대됩니다.
-
 최근 2026년 3월 10일 발표된 자료에 따르면 서울5호선 검단 연장 사업의 예비타당성조사 결과가 통과되었다는 내용이 있습니다. 그러나 대장-홍대선은 서울5호선과 경쟁 관계의 노선이 아니라 수도권 서북부 광역 교통망을 보완하는 또 하나의 중요한 철도 노선입니다.
-
 특히 향후 대장-홍대선이 계양역으로 연결될 경우, 그 연장선상에서 검단신도시까지의 추가 연장 검토 역시 필요합니다. 검단신도시 주요 개발 축을 고려할 때 노선은 이음역(가칭) → 스마트위드업역(가칭) → 워라밸빌리지역(가칭) → 검단구청역(가칭) 순으로 연결될 경우 지역 활성화와 교통 효율 측면에서 가장 효과적인 노선이 될 것입니다.
-
 따라서 대장-홍대선 검단 연장 및 검단구청역 신설 검토를 요청해야 합니다. 여러분들이 적극적으로 민원을 넣어주십시오.</div>
-
       <div class="personal-box">
         <div class="personal-label">✏️ 의견 선택 → 선택에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options1">
@@ -783,18 +727,14 @@
           <div class="personal-option" onclick="trackOption('minwon3_4'); selectOption(this,1,'minwon3_4')">저는 검단신도시 발전을 위해 광역 철도 연결이 필요하다고 생각합니다. <span id="cnt-minwon3_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
         </div>
       </div>
-
       <div class="text-label" style="margin-top:12px;">📋 민원 내용 <span style="font-size:11px;color:var(--muted);font-weight:400;">(상황 선택 시 내용이 바뀝니다)</span></div>
       <div class="minwon-text" id="text1">민원을 선택해 주세요.
 (동일한 내용이 반복 제출되면 효력이 감소할 수 있습니다.
 아래 내용을 참고하여 개인 상황에 맞게 수정 후 제출하시면 더욱 효과적입니다.)</div>
-
       <button class="copy-btn green" onclick="copyText(this,1)">📋 민원 내용 복사하기</button>
-
       <div class="submit-btns">
-        <a class="submit-btn" onclick="trackMinwon('line1')" onclick="trackMinwon('line1')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" onclick="trackMinwon('line1')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
       </div>
-
       <button class="steps-toggle" onclick="toggleSteps(this)">
         📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
       </button>
@@ -809,13 +749,12 @@
       </div>
     </div>
   </div>
-
   <!-- 민원 2 -->
   <div class="card" id="track-card2">
     <div class="card-header">
       <div class="card-num amber">2</div>
       <div>
-        
+
         <div class="card-title">인천순환3호선 검단구청역 포함 예타 요청</div>
         <div style="margin-top:8px;font-size:13px;font-weight:700;color:var(--primary);line-height:1.5;">인천순환3호선 검단구청역 포함 예타 요청 민원을 제출해 주세요 🙏</div>
       </div>
@@ -823,11 +762,8 @@
     <div class="card-body">
       <div class="text-label">📌 왜 민원을 넣어야 하나요?</div>
       <div class="minwon-text" style="background:var(--primary-light);border-color:var(--primary-border);color:var(--primary);">인천순환3호선은 인천 서북부 지역을 연결하는 중요한 철도망 구축 사업입니다. 현재 인천시는 2026년 상반기 예비타당성조사를 실시할 예정이며, 해당 조사 과정에서 검단구청역(가칭, 업무14부지)이 반드시 포함되어 검토될 필요가 있습니다.
-
 검단구청 신청사 예정지 일대는 검단신도시 북측 생활권의 중심 지역으로 향후 대규모 주거단지와 행정 기능이 집중될 예정입니다. 만약 인천순환3호선 계획에 검단구청역이 포함되지 않을 경우 해당 지역은 철도 교통망에서 배제되는 문제가 발생할 수 있습니다.
-
 따라서 예비타당성조사 단계에서 검단구청역을 포함하여 노선 검토가 이루어질 것을 강력히 요청할 필요가 있습니다. 적극적으로 민원을 넣어주십시오.</div>
-
       <div class="personal-box">
         <div class="personal-label">✏️ 의견 선택 → 선택에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options2">
@@ -837,18 +773,14 @@
           <div class="personal-option" onclick="trackOption('minwon2_4'); selectOption(this,2,'minwon2_4')">저는 검단신도시 발전을 위해 철도망 구축이 필요하다고 생각합니다. <span id="cnt-minwon2_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
         </div>
       </div>
-
       <div class="text-label" style="margin-top:12px;">📋 민원 내용 <span style="font-size:11px;color:var(--muted);font-weight:400;">(상황 선택 시 내용이 바뀝니다)</span></div>
       <div class="minwon-text" id="text2">민원을 선택해 주세요.
 (동일한 내용이 반복 제출되면 효력이 감소할 수 있습니다.
 아래 내용을 참고하여 개인 상황에 맞게 수정 후 제출하시면 더욱 효과적입니다.)</div>
-
       <button class="copy-btn amber" onclick="copyText(this,2)">📋 민원 내용 복사하기</button>
-
       <div class="submit-btns">
-        <a class="submit-btn" onclick="trackMinwon('line2')" onclick="trackMinwon('line2')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" onclick="trackMinwon('line2')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
       </div>
-
       <button class="steps-toggle" onclick="toggleSteps(this)">
         📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
       </button>
@@ -863,13 +795,12 @@
       </div>
     </div>
   </div>
-
   <!-- 민원 3 -->
   <div class="card" id="track-card3">
     <div class="card-header">
       <div class="card-num blue">3</div>
       <div>
-        
+
         <div class="card-title">인천1호선 검단구청역 연장</div>
         <div style="margin-top:8px;font-size:13px;font-weight:700;color:var(--primary);line-height:1.5;">인천1호선 검단구청역 연장 요청 민원을 제출해 주세요 🙏</div>
       </div>
@@ -877,11 +808,8 @@
     <div class="card-body">
       <div class="text-label">📌 왜 민원을 넣어야 하나요?</div>
       <div class="minwon-text" style="background:var(--primary-light);border-color:var(--primary-border);color:var(--primary);">인천1호선 검단 연장은 검단신도시 교통 체계의 중요한 기반을 마련한 철도 사업입니다. 현재 아라역(101역), 신검단중앙역(102역), 검단호수공원역(103역)까지 연장이 완료되었지만, 검단구청 신청사 예정지인 업무14부지 일대는 철도 교통 사각지대에 놓여 있습니다.
-
-해당 지역에는 이편한세상 검단 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 향후 약 2만 세대에 가까운 인구가 거주할 예정이며, 검단구청 복합청사 건립에 따라 행정·상업 기능이 집중되는 핵심 지역이 될 것으로 예상됩니다.
-
+해당 지역에는 검단신도시 푸르지오 더 파크, 이편한세상 검단 에코비스타, 더샵 검단레이크파크, 엘리프 검단 포레듀, 워라밸빌리지 임대아파트, 나진포천 권역의 신규 공급 임대아파트, 마전/불로동 일대의 신도시&원도심 등 향후 약 2만 세대에 가까운 인구가 거주할 예정이며, 검단구청 복합청사 건립에 따라 행정·상업 기능이 집중되는 핵심 지역이 될 것으로 예상됩니다.
 따라서 검단구 분구가 예정된 2026년을 고려하여 인천1호선 검단구청역(가칭) 신설 및 연장 검토가 반드시 필요하니 여러분들이 적극 민원을 넣어주십시오.</div>
-
       <div class="personal-box">
         <div class="personal-label">✏️ 의견 선택 → 선택에 맞는 민원 내용이 아래에 나타납니다</div>
         <div class="personal-options" id="options3">
@@ -891,18 +819,14 @@
           <div class="personal-option" onclick="trackOption('minwon1_4'); selectOption(this,3,'minwon1_4')">저는 검단신도시 발전을 위해 철도망 확충이 필요하다고 생각합니다. <span id="cnt-minwon1_4" style="display:inline-block;background:rgba(45,107,100,0.3);color:#9bbdaf;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></div>
         </div>
       </div>
-
       <div class="text-label" style="margin-top:12px;">📋 민원 내용 <span style="font-size:11px;color:var(--muted);font-weight:400;">(상황 선택 시 내용이 바뀝니다)</span></div>
       <div class="minwon-text" id="text3">민원을 선택해 주세요.
 (동일한 내용이 반복 제출되면 효력이 감소할 수 있습니다.
 아래 내용을 참고하여 개인 상황에 맞게 수정 후 제출하시면 더욱 효과적입니다.)</div>
-
       <button class="copy-btn blue" onclick="copyText(this,3)">📋 민원 내용 복사하기</button>
-
       <div class="submit-btns">
-        <a class="submit-btn" onclick="trackMinwon('line3')" onclick="trackMinwon('line3')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
+        <a class="submit-btn" onclick="trackMinwon('line3')" href="https://www.epeople.go.kr/nep/crtf/userLogn.npaid?returnUrl=/nep/minwon/cvplComp/selectCvplCompPage.npaid" target="_blank">📢 민원 접수하러 가기 <span>→</span></a>
       </div>
-
       <button class="steps-toggle" onclick="toggleSteps(this)">
         📖 접수 방법 모르시면 여기를 누르세요 <span class="arrow">▼</span>
       </button>
@@ -917,7 +841,6 @@
       </div>
     </div>
   </div>
-
   <p class="footer">
     검단신도시 주민 교통 민원 모음 · 많은 참여가 빠른 반영으로 이어집니다<br><br>
     <span style="font-size:11px;font-weight:400;color:#5a7a72;line-height:2.2;text-align:left;display:inline-block;">
@@ -929,93 +852,54 @@
     </span>
   </p>
 </div>
-
 <script>
   const minwonData = {
     minwon1_1: `저는 검단신도시 입주예정자로서, 교통분담금을 납부하고 입주를 준비 중입니다. 그러나 인천1호선이 검단호수공원역에서 끊겨 업무14부지 일대가 철도 사각지대에 놓인 상황은 실거주 계획에 심각한 우려를 줍니다.
-
-해당 지역에는 이편한세상 검단 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 약 2만 세대가 입주할 예정이며, 검단구청 복합청사까지 건립됩니다. 2026년 검단구 분구를 앞두고 구청 소재지에 철도가 없다는 것은 행정 서비스와 생활 교통 모두에서 심각한 문제입니다.
-
+해당 지역에는 검단신도시 푸르지오 더 파크, 이편한세상 검단 에코비스타, 더샵 검단레이크파크, 엘리프 검단 포레듀, 워라밸빌리지 임대아파트, 나진포천 권역의 신규 공급 임대아파트, 마전/불로동 일대의 신도시&원도심 등 약 2만 세대가 입주할 예정이며, 검단구청 복합청사까지 건립됩니다. 2026년 검단구 분구를 앞두고 구청 소재지에 철도가 없다는 것은 행정 서비스와 생활 교통 모두에서 심각한 문제입니다.
 인천1호선을 검단구청역(업무14부지)까지 연장하여 입주 예정 주민들의 이동권을 보장해 주실 것을 강력히 요청드립니다.`,
-
     minwon1_2: `저는 현재 검단신도시에 거주하며 매일 대중교통 불편을 직접 겪고 있습니다. 인천1호선이 검단호수공원역에서 끊겨 업무14부지 일대 주민들은 버스와 환승을 반복해야 하는 상황입니다.
-
-해당 지역에는 이편한세상 검단 에코비스타, 푸르지오 더 파크, 엘리프 검단 포레듀, 워라밸 빌리지 등 약 2만 세대가 입주할 예정이며, 검단구청 복합청사 건립으로 행정·상업 기능이 집중되는 핵심 지역입니다. 그럼에도 철도 연결이 없다면 이 지역 주민들은 교통 편익의 사각지대에 영구적으로 놓이게 됩니다.
-
+해당 지역에는 검단신도시 푸르지오 더 파크, 이편한세상 검단 에코비스타, 더샵 검단레이크파크, 엘리프 검단 포레듀, 워라밸빌리지 임대아파트, 나진포천 권역의 신규 공급 임대아파트, 마전/불로동 일대의 신도시&원도심 등 약 2만 세대가 입주할 예정이며, 검단구청 복합청사 건립으로 행정·상업 기능이 집중되는 핵심 지역입니다. 그럼에도 철도 연결이 없다면 이 지역 주민들은 교통 편익의 사각지대에 영구적으로 놓이게 됩니다.
 2026년 검단구 분구에 맞춰 인천1호선 검단구청역(업무14부지) 연장을 조속히 검토해 주실 것을 강력히 요청드립니다.`,
-
     minwon1_3: `저는 인근 지역에 거주하는 시민으로서, 검단신도시의 철도 교통 인프라 확충이 지역 균형 발전을 위해 반드시 필요하다고 생각합니다.
-
 인천1호선은 현재 검단호수공원역까지만 연장된 상태이나, 바로 인근 업무14부지 일대에 약 2만 세대와 검단구청 복합청사가 들어설 예정입니다. 검단구 분구가 예정된 2026년을 앞두고 구청 소재지에 철도 접근성이 없다는 것은 지역 간 교통 불균형을 심화시키는 문제입니다.
-
 인천1호선 검단구청역(업무14부지) 연장 검토를 강력히 요청드립니다.`,
-
     minwon1_4: `저는 검단신도시에 관심을 가진 시민으로서, 인천1호선 검단구청역 연장의 필요성을 강력히 지지합니다.
-
 현재 인천1호선은 검단호수공원역에서 끊겨 있으나, 업무14부지 일대에는 약 2만 세대와 검단구청 복합청사가 예정되어 있습니다. 2026년 검단구 분구를 앞두고 핵심 지역이 철도망에서 소외된다면 수도권 교통 인프라의 균형 발전에 역행하는 결과가 됩니다.
-
 인천1호선을 검단구청역(업무14부지)까지 연장하여 주민 이동권을 보장해 주실 것을 요청드립니다.`,
-
     minwon2_1: `저는 검단신도시 입주예정자로서, 인천순환3호선 예비타당성조사 계획에 검단구청역(업무14부지)을 반드시 포함해 주실 것을 강력히 요청드립니다.
-
 2026년 상반기 예타는 노선이 사실상 확정되는 가장 중요한 단계입니다. 이 시점에 검단구청역이 포함되지 않으면 이후 노선 변경은 불가능에 가깝습니다. 업무14부지 일대는 약 2만 세대와 검단구청 복합청사가 들어서는 검단신도시 북측 생활권의 핵심 지역으로, 철도망에서 배제될 경우 입주 예정 주민들의 교통 불편이 장기간 지속될 것입니다.
-
 예타 단계에서 검단구청역을 포함한 노선 검토가 반드시 이루어지도록 요청드립니다.`,
-
     minwon2_2: `저는 현재 검단신도시에 거주하며 대중교통 불편을 직접 겪고 있습니다. 인천순환3호선 예비타당성조사에 검단구청역(업무14부지)이 반드시 포함되어야 합니다.
-
 2026년 상반기 예타에서 검단구청역이 빠질 경우, 업무14부지 일대는 철도 교통망에서 영구적으로 배제될 가능성이 높습니다. 이 지역은 약 2만 세대와 검단구청 복합청사가 들어서는 검단신도시의 핵심 거점입니다. 지금 목소리를 내지 않으면 우리 지역만 광역 철도망에서 소외되는 결과가 초래됩니다.
-
 예비타당성조사 단계에서 검단구청역을 포함하여 노선 검토가 이루어질 것을 강력히 요청드립니다.`,
-
     minwon2_3: `저는 인근 지역에 거주하는 시민으로서, 인천순환3호선 예비타당성조사에 검단구청역(업무14부지)이 포함되어야 한다고 생각합니다.
-
 인천 서북부 전체 교통망의 균형 있는 완성을 위해서는 약 2만 세대와 검단구청 복합청사가 예정된 업무14부지가 반드시 3호선 노선에 포함되어야 합니다. 2026년 상반기 예타가 사실상 마지막 기회인 만큼, 지금 단계에서 검단구청역 포함 여부를 결정해야 합니다.
-
 예비타당성조사 단계에서 검단구청역을 포함한 노선 검토를 강력히 요청드립니다.`,
-
     minwon2_4: `저는 검단신도시에 관심을 가진 시민으로서, 인천순환3호선 예비타당성조사에 검단구청역(업무14부지) 포함을 강력히 요청드립니다.
-
 2026년 상반기 예타는 노선이 확정되는 결정적 단계입니다. 검단신도시 북측 생활권의 핵심인 업무14부지에는 약 2만 세대와 검단구청 복합청사가 예정되어 있으며, 이 지역이 3호선에서 배제된다면 수도권 교통 인프라의 형평성 측면에서도 문제가 됩니다.
-
 예타 단계에서 검단구청역을 포함한 노선 검토가 반드시 이루어지도록 요청드립니다.`,
-
     minwon3_1: `저는 검단신도시 입주예정자로서, 대장-홍대선의 검단 연장 및 검단구청역(업무14부지) 신설 검토를 강력히 요청드립니다.
-
 2026년 3월 서울5호선 검단 연장 예타가 통과되었지만, 대장-홍대선은 5호선과 경쟁 노선이 아닙니다. 서울 홍대·합정·공덕 방면으로의 직결 연결이 가능한 별개의 광역 노선으로, 수도권 서북부 교통망을 보완하는 중요한 역할을 합니다. 대장-홍대선이 계양역까지 연결될 경우, 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로 이어지는 연장이 가능하며, 이는 지역 개발 축과도 일치하는 가장 효율적인 노선입니다.
-
 입주 예정 주민들의 서울 접근성 확보를 위해 대장-홍대선 검단 연장을 계획 수립 단계에서 반드시 검토해 주시기 바랍니다.`,
-
     minwon3_2: `저는 현재 검단신도시에 거주하며 서울 이동에 큰 불편을 겪고 있습니다. 대장-홍대선의 검단 연장 및 검단구청역(업무14부지) 신설을 강력히 요청드립니다.
-
 서울5호선 예타 통과는 반가운 소식이지만, 대장-홍대선은 홍대·합정·공덕 방면 직결이 가능한 별도의 광역 노선입니다. 두 노선은 서로를 대체하는 것이 아니라 보완하는 관계입니다. 대장-홍대선이 계양역까지 연결되면 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로의 연장이 현실적인 방안이 됩니다.
-
 수도권 서북부 광역 교통망 완성을 위해 대장-홍대선 검단 연장을 계획에 포함해 주실 것을 강력히 요청드립니다.`,
-
     minwon3_3: `저는 인근 지역에 거주하는 시민으로서, 수도권 서북부 광역 교통망 완성을 위해 대장-홍대선의 검단 연장 및 검단구청역 신설이 필요하다고 생각합니다.
-
 서울5호선 검단 연장 예타가 통과되었지만, 대장-홍대선은 홍대·합정·공덕 방면으로의 직결이 가능한 별개 노선으로 반드시 함께 추진되어야 합니다. 대장-홍대선이 계양역까지 연결될 경우 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로의 검단 연장이 수도권 서북부 광역망 완성에 크게 기여할 것입니다.
-
 대장-홍대선 검단 연장을 관련 계획 수립 시 반드시 포함해 주실 것을 요청드립니다.`,
-
     minwon3_4: `저는 검단신도시에 관심을 가진 시민으로서, 대장-홍대선 검단 연장 및 검단구청역 신설 검토를 강력히 요청드립니다.
-
 대장-홍대선은 서울5호선과 경쟁 노선이 아니라 수도권 서북부 광역 교통망을 보완하는 독립적인 노선입니다. 계양역 연결 이후 이음역→스마트위드업역→워라밸빌리지역→검단구청역으로 이어지는 검단 연장은 지역 개발 축과 일치하며 교통 효율 측면에서도 가장 합리적인 방안입니다.
-
 관련 계획 수립 시 대장-홍대선 검단 연장을 반드시 포함시켜 주실 것을 강력히 요청드립니다.`
   };
-
   function selectOption(el, num, key) {
     document.querySelectorAll('#options' + num + ' .personal-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
     document.getElementById('text' + num).innerText = minwonData[key];
   }
-
   function toggleSteps(btn) {
     btn.classList.toggle('open');
     btn.nextElementSibling.classList.toggle('open');
   }
-
   function copyText(btn, num) {
     const text = document.getElementById('text' + num).innerText;
     if (text.startsWith('민원을 선택해 주세요.')) {
@@ -1053,7 +937,6 @@
     }
   }
 </script>
-
 <script>
 function downloadExcel() {
   if (typeof XLSX === 'undefined') {
@@ -1095,7 +978,6 @@ function downloadExcel() {
   });
 }
 </script>
-
 <div style="background:#ffffff;border-top:1px solid #ddd;padding:24px 20px;font-family:'Noto Sans KR',sans-serif;color:#555;font-size:12px;line-height:1.9;text-align:left;max-width:600px;margin:0 auto;">
   <div style="font-weight:700;color:#333;margin-bottom:6px;">※ 사이트, 데이터 활용 및 보관 기간</div>
   <p>본 사이트 및 데이터는 대장-홍대선 검단 연장 및 검단구청역 신설 청원, 인천순환3호선 검단구청역 포함 예타 요청, 인천1호선 검단구청역 연장, 총 3가지의 철도와 관련한 정책 건의 및 추진 과정의 참고 자료로 활용됩니다.</p>
